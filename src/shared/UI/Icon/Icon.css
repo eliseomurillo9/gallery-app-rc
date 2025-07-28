@@ -1,0 +1,45 @@
+:root {
+    /* Icon sizes */
+  --icon-sm: 1rem;
+  --icon-base: 1.25rem;
+  --icon-lg: 1.5rem;
+  --icon-xl: 2rem;
+}
+
+.icon-small {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+.icon-base {
+  width: var(--icon-base);
+  height: var(--icon-base);
+}
+.icon-large {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}
+.icon-xlarge {
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+}
+.icon-primary {
+  fill: var(--color-primary);
+}
+.icon-secondary {
+  fill: var(--color-secondary);
+}
+.icon-white {
+  fill: var(--color-white);
+}
+.icon-danger {
+  fill: var(--color-danger);
+}
+.icon-success {
+  fill: var(--color-success);
+}
+.icon-info {
+  fill: var(--color-info);
+}
+.icon-warning {
+  fill: var(--color-warning);
+}
