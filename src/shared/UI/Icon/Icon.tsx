@@ -4,7 +4,7 @@ type IconProps = {
   name: keyof typeof Icons;
   size?: Size;
   color?: Color;
-};
+}
 
 const Icons = {
   home: (
@@ -30,7 +30,9 @@ const Icons = {
   ),
   menu: (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
-)
+  ),
+  upload: (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>)
 };
 
 const iconVariants = {
@@ -49,16 +51,16 @@ const iconVariants = {
     medium: "icon-medium",
     large: "icon-large",
     xl: "icon-xlarge",
+    "2xl": "icon-2xlarge",
   },
 };
 
-export function Icon({ name, size, color = "primary" }: IconProps) {
+export function Icon({ name, size, color = "primary" }: Readonly<IconProps>) {
   const sizeClass = iconVariants.iconSizes[size || "base"];
   const colorClass = iconVariants.iconColors[color];
 
   return (
-    <>
       <div className={`${colorClass} ${sizeClass}`}>{Icons[name]}</div>
-    </>
+
   );
 }
