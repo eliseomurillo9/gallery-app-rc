@@ -8,38 +8,45 @@
   border: none;
   cursor: pointer;
   transition: background 0.2s;
+  height: fit-content;
 }
 
 /* Size variants */
-.button-small {
+.button--small {
   padding: 0.25rem 0.75rem;
   font-size: var(--text-sm);
 }
 
-.button-base {
+.button--base {
   padding: 0.25rem 0.75rem;
   font-size: var(--text-base);
 }
 
-.button-large {
+.button--large {
   padding: 0.75rem 1.5rem;
   font-size: var(--text-lg);
 }
 
-.button-xl {
+.button--xl {
   padding: 1rem 2rem;
   font-size: var(--text-xl);
 }
 
-.button-primary {
+.button--primary {
   background-color: var(--color-primary);
   color: var(--color-white);
 }
-.button-secondary {
+.button--secondary {
   background-color: var(--color-secondary);
   color: var(--color-white);
 }
 
+.button--danger {
+  background-color: var(--color-danger);
+}
+.button--danger:hover {
+  background-color: var(--color-danger)/40;
+}
 .button:hover {
   background-color: var(--color-primary-a20);
 }
