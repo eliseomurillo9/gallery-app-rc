@@ -15,8 +15,7 @@ export function UploadView() {
   }
 
   function deleteImage(imageIndex: number) {
-    const updatedList = imagesList.splice(imageIndex, 1)
-    console.log(updatedList)
+    setImagesList(imagesList.filter((_, index) =>  index !== imageIndex))
   }
 
     return (
@@ -24,10 +23,7 @@ export function UploadView() {
       {imagesList.length > 0 ? 
       imagesList.map((file, index) => {
         return (
-          <>
-          <h1>COUCOU</h1>
-          <ImageCard key={index} file={file} />
-          </>
+          <ImageCard key={index} file={file} imageDelete={() => deleteImage(index)} />
         )
             }) : (
         <>

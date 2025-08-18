@@ -17,13 +17,14 @@ export type ButtonProps = Readonly<{
   size?: keyof typeof buttonSize
   placeholder?: string,
   href?: string,
+  action?: () => void
 }>
 
-export function Button({ variant = 'primary', size = 'base', placeholder = 'Click me', href }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'base', placeholder = 'Click me', href, action }: ButtonProps) {
   if (href) {
     return <a className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} href={href}>{placeholder}</a>
   } else {
-    return <button className={`button ${buttonVariant[variant]} ${buttonSize[size]}`}>{placeholder}</button>
+    return <button className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} onClick={action}>{placeholder}</button>
   
   }
 }

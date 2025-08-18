@@ -2,9 +2,9 @@ import { Button } from '../../../shared/UI/Button/Button';
 import './imageCard.css';
 type ImageCardProps = {
   file: File;
-  onDelete?: () => void;
+  imageDelete?: () => void;
 }
-export function ImageCard({ file, onDelete }: Readonly<ImageCardProps>) {
+export function ImageCard({ file, imageDelete }: Readonly<ImageCardProps>) {
   return (
     <div className="image-card">
       <div className='image-card__img-wrapper'>
@@ -16,7 +16,7 @@ export function ImageCard({ file, onDelete }: Readonly<ImageCardProps>) {
         <p>{file.type}</p>
       </div>
       <div className='image-card__action'>
-      <Button variant='danger' placeholder='Delete' size='large' />
+      <Button variant='danger' placeholder='Delete' size='large' action={imageDelete} />
       </div>
     </div>
   );
