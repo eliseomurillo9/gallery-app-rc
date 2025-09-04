@@ -44,9 +44,12 @@
 .button--danger {
   background-color: var(--color-danger);
 }
-.button--danger:hover {
-  background-color: var(--color-danger)/40;
-}
+
 .button:hover {
-  background-color: var(--color-primary-a20);
+  background-color: var(--color-secondary);
+}
+
+.button--danger:hover {
+  background-color: rgb(240, 21, 21);
+  transition: 0.5s ease-in-out;
 }

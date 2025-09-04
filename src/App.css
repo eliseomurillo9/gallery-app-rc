@@ -1,23 +1,32 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0;
   text-align: center;
-  min-height: 100dvh;
   width: 100%;
-  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  overflow-x: hidden;
-  box-sizing: border-box;
+  height: 100dvh;
 }
 
 main {
-  margin: 4.5rem auto;
-  width: 90%;
-  height: 100%;
+  flex: 1;
+  overflow-y: auto; /* scroll here */
+   width: 100%; /* instead of 90% */
+  margin: 0;  /* instead of auto */
+  padding: 1rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+}
+main::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 @media (prefers-reduced-motion: no-preference) {

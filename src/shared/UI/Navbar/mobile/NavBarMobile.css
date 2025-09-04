@@ -9,10 +9,9 @@
   margin: 0;
   list-style: none;
   gap: 1rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+   height: 60px; /* adjust to your navbar height */
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .navbar-mobile--ul {

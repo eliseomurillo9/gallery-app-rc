@@ -2,16 +2,27 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  min-height: 100%;
+}
+
+.upload-view--no-images {
+  border: dashed 0.1rem var(--color-primary);
+  border-radius: 0.8rem;
+  background-color: var(--color-surface-a10);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: relative;
-  transform: translateY(-50%);
-  top: 50%;
-  h2{
+  h2 {
     font-size: var(--text-2xl);
     margin: 0.5rem 0;
     font-weight: bold;
   }
 }
+
 
 .upload-view--form {
   position: absolute;
@@ -23,6 +34,43 @@
     opacity: 0;
   }
 }
+
+.upload-view--image-list {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 2rem;
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: start;
+  }
+}
+
+.upload-view--preview-image {
+   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.upload-view--add-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.1rem dashed var(--color-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  h2 {
+    font-size: var(--text-xs);
+  }
+}
+
 .upload-button {
   background-color: var(--color-primary);
   width: fit-content;

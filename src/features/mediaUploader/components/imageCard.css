@@ -35,6 +35,7 @@
   h3 {
     font-size: 1rem;
     font-weight: bold;
+    overflow-wrap: break-word;
   }
 }
 
@@ -42,3 +43,21 @@
 .image-card__action {
   margin-left: auto;
 }
+
+/* .card-animation {
+  animation: pop-in 0.5s ease-in-out;
+}
+
+@keyframes pop-in {
+  0%{
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(0.9);
+  } */
+/* } */
