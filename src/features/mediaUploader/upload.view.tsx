@@ -8,10 +8,16 @@ export function UploadView() {
   const inputs = useRef<HTMLInputElement>(null);
   function updatePicList(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    const files = inputs.current?.files;
-    if (files) {
-      setImagesList((prev) => [...prev, ...Array.from(files)]);
+    const files = Array.from(e.target.files || []);
+
+    if (files.length === 0) return;
+    if (files.length > 10 || imagesList.length + files.length > 10) {
+      alert("You can only upload up to 10 images.");
+      const imagesQuantityToLimit = 10 - imagesList.length;
+      setImagesList((prev) => [...prev, ...files.slice(0, imagesQuantityToLimit)]);
+      return;
     }
+    setImagesList((prev) => [...prev, ...files]);
   }
 
   function deleteImage(imageIndex: number) {
