@@ -1,3 +1,5 @@
+import { Icon } from '../Icon/Icon'
+import type { Icon as IconType } from '../Icon/icons'
 import './Button.css'
 
 const buttonVariant = {
@@ -17,14 +19,15 @@ export type ButtonProps = Readonly<{
   size?: keyof typeof buttonSize
   placeholder?: string,
   href?: string,
+  icon?: IconType
   action?: () => void
 }>
 
-export function Button({ variant = 'primary', size = 'base', placeholder = 'Click me', href, action }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'base', placeholder, href, action, icon }: ButtonProps) {
   if (href) {
-    return <a className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} href={href}>{placeholder}</a>
+    return <a className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} href={href}>{placeholder && <span>{placeholder}</span>} {icon && <Icon name={icon} size={size} />}</a>
   } else {
-    return <button className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} onClick={action}>{placeholder}</button>
-  
+    return <button className={`button ${buttonVariant[variant]} ${buttonSize[size]}`} onClick={action}>{placeholder && <span>{placeholder}</span>} {icon && <Icon name={icon} size={size} />}</button>
+
   }
 }
