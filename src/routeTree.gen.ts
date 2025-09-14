@@ -10,52 +10,86 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadRouteImport } from './routes/upload'
-import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as PhotosRouteImport } from './routes/photos'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ProfileRouteRouteImport } from './routes/profile/route'
+import { Route as ProfileGalleryRouteImport } from './routes/profile/gallery'
+import { Route as ProfileCategoriesRouteImport } from './routes/profile/categories'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
   path: '/upload',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileRoute = ProfileRouteImport.update({
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRouteRoute = ProfileRouteRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PhotosRoute = PhotosRouteImport.update({
-  id: '/photos',
-  path: '/photos',
-  getParentRoute: () => rootRouteImport,
+const ProfileGalleryRoute = ProfileGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
+const ProfileCategoriesRoute = ProfileCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => ProfileRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/photos': typeof PhotosRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
+  '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
+  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/gallery': typeof ProfileGalleryRoute
 }
 export interface FileRoutesByTo {
-  '/photos': typeof PhotosRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
+  '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
+  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/gallery': typeof ProfileGalleryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/photos': typeof PhotosRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
+  '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
+  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/gallery': typeof ProfileGalleryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/photos' | '/profile' | '/upload'
+  fullPaths:
+    | '/profile'
+    | '/gallery'
+    | '/upload'
+    | '/profile/categories'
+    | '/profile/gallery'
   fileRoutesByTo: FileRoutesByTo
-  to: '/photos' | '/profile' | '/upload'
-  id: '__root__' | '/photos' | '/profile' | '/upload'
+  to:
+    | '/profile'
+    | '/gallery'
+    | '/upload'
+    | '/profile/categories'
+    | '/profile/gallery'
+  id:
+    | '__root__'
+    | '/profile'
+    | '/gallery'
+    | '/upload'
+    | '/profile/categories'
+    | '/profile/gallery'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  PhotosRoute: typeof PhotosRoute
-  ProfileRoute: typeof ProfileRoute
+  ProfileRouteRoute: typeof ProfileRouteRouteWithChildren
+  GalleryRoute: typeof GalleryRoute
   UploadRoute: typeof UploadRoute
 }
 
@@ -68,26 +102,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
+      preLoaderRoute: typeof ProfileRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/photos': {
-      id: '/photos'
-      path: '/photos'
-      fullPath: '/photos'
-      preLoaderRoute: typeof PhotosRouteImport
-      parentRoute: typeof rootRouteImport
+    '/profile/gallery': {
+      id: '/profile/gallery'
+      path: '/gallery'
+      fullPath: '/profile/gallery'
+      preLoaderRoute: typeof ProfileGalleryRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
+    '/profile/categories': {
+      id: '/profile/categories'
+      path: '/categories'
+      fullPath: '/profile/categories'
+      preLoaderRoute: typeof ProfileCategoriesRouteImport
+      parentRoute: typeof ProfileRouteRoute
     }
   }
 }
 
+interface ProfileRouteRouteChildren {
+  ProfileCategoriesRoute: typeof ProfileCategoriesRoute
+  ProfileGalleryRoute: typeof ProfileGalleryRoute
+}
+
+const ProfileRouteRouteChildren: ProfileRouteRouteChildren = {
+  ProfileCategoriesRoute: ProfileCategoriesRoute,
+  ProfileGalleryRoute: ProfileGalleryRoute,
+}
+
+const ProfileRouteRouteWithChildren = ProfileRouteRoute._addFileChildren(
+  ProfileRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  PhotosRoute: PhotosRoute,
-  ProfileRoute: ProfileRoute,
+  ProfileRouteRoute: ProfileRouteRouteWithChildren,
+  GalleryRoute: GalleryRoute,
   UploadRoute: UploadRoute,
 }
 export const routeTree = rootRouteImport

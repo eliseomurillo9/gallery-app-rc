@@ -6,7 +6,7 @@ export function NavbarMobile() {
       <nav className="navbar-mobile ">
         <ul className="navbar-mobile--ul">
           <li>
-            <Link to="/photos">
+            <Link to="/gallery">
               <Icon name="gallery" color="white" size="xl" /> Gallery
             </Link>
           </li>

@@ -1,3 +1,4 @@
+import { Outlet } from '@tanstack/react-router';
 import { Button } from '../../shared/UI/Button/Button';
 import { Avatar } from './components/Avatar';
 import { Tabs } from './components/tabs/Tabs';
@@ -18,8 +19,8 @@ export function ProfileView() {
           <Avatar/>
           <h2>John Doe</h2>
         </div>
-        <Tabs tabs={[{ name: "All", active: true }, { name: "Categories", active: false }, { name: "Settings", active: false }]} />
-        
+        <Tabs tabs={[{ name: "gallery", active: true, link: "/gallery" }, { name: "categories", active: false, link: "/categories" }, { name: "settings", active: false, link: "/profile/settings" }]} />
+        <Outlet  />
       </div>
     </section>
   )  
