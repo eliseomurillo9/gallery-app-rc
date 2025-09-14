@@ -1,5 +1,6 @@
 import { Button } from '../../shared/UI/Button/Button';
-import { Avatar } from './components/avatar';
+import { Avatar } from './components/Avatar';
+import { Tabs } from './components/tabs/Tabs';
 import './profile.css';
 export function ProfileView() {
   return (
@@ -14,10 +15,11 @@ export function ProfileView() {
 
       <div className="profile-view__container">
         <div className='profile-view__container__info'>
-          <Avatar />
+          <Avatar/>
           <h2>John Doe</h2>
         </div>
-        <p>Manage your account settings and preferences here.</p>
+        <Tabs tabs={[{ name: "All", active: true }, { name: "Categories", active: false }, { name: "Settings", active: false }]} />
+        
       </div>
     </section>
   )  

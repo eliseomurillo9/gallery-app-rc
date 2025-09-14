@@ -1,0 +1,18 @@
+.tabs-container {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  width: 100%;
+}
+
+.tab {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.active {
+  background-color: red;
+  font-weight: bold;
+}
