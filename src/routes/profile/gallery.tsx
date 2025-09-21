@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Gallery } from "../../features/gallery/Gallery";
 
 export const Route = createFileRoute("/profile/gallery")({
-  component: RouteComponent,
+  component: Gallery,
 });
 
-function RouteComponent() {
-  return <div>Hello "/profile/gallery"!</div>;
-}

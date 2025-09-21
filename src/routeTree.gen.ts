@@ -12,8 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadRouteImport } from './routes/upload'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ProfileRouteRouteImport } from './routes/profile/route'
+import { Route as ProfileSettingsRouteImport } from './routes/profile/settings'
 import { Route as ProfileGalleryRouteImport } from './routes/profile/gallery'
-import { Route as ProfileCategoriesRouteImport } from './routes/profile/categories'
+import { Route as ProfileAlbumsRouteImport } from './routes/profile/albums'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
@@ -30,14 +31,19 @@ const ProfileRouteRoute = ProfileRouteRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileSettingsRoute = ProfileSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
 const ProfileGalleryRoute = ProfileGalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
   getParentRoute: () => ProfileRouteRoute,
 } as any)
-const ProfileCategoriesRoute = ProfileCategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
+const ProfileAlbumsRoute = ProfileAlbumsRouteImport.update({
+  id: '/albums',
+  path: '/albums',
   getParentRoute: () => ProfileRouteRoute,
 } as any)
 
@@ -45,23 +51,26 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRouteRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
-  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/albums': typeof ProfileAlbumsRoute
   '/profile/gallery': typeof ProfileGalleryRoute
+  '/profile/settings': typeof ProfileSettingsRoute
 }
 export interface FileRoutesByTo {
   '/profile': typeof ProfileRouteRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
-  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/albums': typeof ProfileAlbumsRoute
   '/profile/gallery': typeof ProfileGalleryRoute
+  '/profile/settings': typeof ProfileSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/profile': typeof ProfileRouteRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/upload': typeof UploadRoute
-  '/profile/categories': typeof ProfileCategoriesRoute
+  '/profile/albums': typeof ProfileAlbumsRoute
   '/profile/gallery': typeof ProfileGalleryRoute
+  '/profile/settings': typeof ProfileSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -69,22 +78,25 @@ export interface FileRouteTypes {
     | '/profile'
     | '/gallery'
     | '/upload'
-    | '/profile/categories'
+    | '/profile/albums'
     | '/profile/gallery'
+    | '/profile/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/profile'
     | '/gallery'
     | '/upload'
-    | '/profile/categories'
+    | '/profile/albums'
     | '/profile/gallery'
+    | '/profile/settings'
   id:
     | '__root__'
     | '/profile'
     | '/gallery'
     | '/upload'
-    | '/profile/categories'
+    | '/profile/albums'
     | '/profile/gallery'
+    | '/profile/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/settings': {
+      id: '/profile/settings'
+      path: '/settings'
+      fullPath: '/profile/settings'
+      preLoaderRoute: typeof ProfileSettingsRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
     '/profile/gallery': {
       id: '/profile/gallery'
       path: '/gallery'
@@ -123,24 +142,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileGalleryRouteImport
       parentRoute: typeof ProfileRouteRoute
     }
-    '/profile/categories': {
-      id: '/profile/categories'
-      path: '/categories'
-      fullPath: '/profile/categories'
-      preLoaderRoute: typeof ProfileCategoriesRouteImport
+    '/profile/albums': {
+      id: '/profile/albums'
+      path: '/albums'
+      fullPath: '/profile/albums'
+      preLoaderRoute: typeof ProfileAlbumsRouteImport
       parentRoute: typeof ProfileRouteRoute
     }
   }
 }
 
 interface ProfileRouteRouteChildren {
-  ProfileCategoriesRoute: typeof ProfileCategoriesRoute
+  ProfileAlbumsRoute: typeof ProfileAlbumsRoute
   ProfileGalleryRoute: typeof ProfileGalleryRoute
+  ProfileSettingsRoute: typeof ProfileSettingsRoute
 }
 
 const ProfileRouteRouteChildren: ProfileRouteRouteChildren = {
-  ProfileCategoriesRoute: ProfileCategoriesRoute,
+  ProfileAlbumsRoute: ProfileAlbumsRoute,
   ProfileGalleryRoute: ProfileGalleryRoute,
+  ProfileSettingsRoute: ProfileSettingsRoute,
 }
 
 const ProfileRouteRouteWithChildren = ProfileRouteRoute._addFileChildren(

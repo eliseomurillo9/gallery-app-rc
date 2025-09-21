@@ -1,10 +1,11 @@
-import { Link } from '@tanstack/react-router'
+import { Link, type FileRoutesByPath } from '@tanstack/react-router'
 import './tabs.css'
+type ProfileRoutes = FileRoutesByPath["/profile"]['path'] | FileRoutesByPath["/profile/albums"]['path'] |FileRoutesByPath["/profile/gallery"]['path']
 type TabsProps = {
   tabs?: {
     name: string,
     active: boolean,
-    link: string
+    link: ProfileRoutes
   }[]
 }
 export function Tabs ({ tabs = [] }: TabsProps) {
