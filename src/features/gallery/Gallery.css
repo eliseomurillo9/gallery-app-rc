@@ -1,6 +1,7 @@
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 1rem;
-  padding: 1rem;
+  column-width: 200px;   /* preferred min width */
+  column-gap: 0.5rem;    /* reduce middle spacing */
+  margin: 0.5rem 0;
+  padding: 1rem 0.43rem;
 }
+

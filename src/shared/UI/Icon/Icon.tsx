@@ -34,6 +34,5 @@ export function Icon({ name, size, color = "white" }: Readonly<IconProps>) {
 
   return (
       <div className={`${colorClass} ${sizeClass}`}>{icons[name]}</div>
-
   );
 }

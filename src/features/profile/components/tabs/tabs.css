@@ -12,7 +12,11 @@
   transition: background-color 0.3s;
 }
 
-.active {
-  background-color: red;
+.tab__active {
   font-weight: bold;
+  border-bottom: 2px solid var(--color-primary);
+
+  svg {
+    fill: var(--color-primary);
+  }
 }

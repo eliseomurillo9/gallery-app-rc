@@ -1,11 +1,11 @@
 .portrait-view {
   aspect-ratio: 1 / 1;
+  margin: auto;
 }
 .portrait-view__img {
   width: 12rem;
   height: 100%;
   border-radius: 1rem;
-  flex: 1;
 
   img {
     width: 100%;

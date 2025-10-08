@@ -1,6 +1,11 @@
 .album-view {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(12rem, 1fr));
   gap: 1rem;
-  justify-content: center;
+  margin: auto;
+}
+
+
+.album-view > *:only-child {
+  background-color: blue;
 }

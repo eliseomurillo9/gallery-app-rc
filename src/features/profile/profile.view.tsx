@@ -22,7 +22,7 @@ export function ProfileView() {
         <Tabs
           tabs={[
             { name: "gallery", active: true, link: "/gallery" },
-            { name: "albums", active: false, link: "/albums" },
+            { name: "album", active: false, link: "/albums" },
             { name: "settings", active: false, link: "/settings" },
           ]}
         />

@@ -19,6 +19,7 @@ export function albumsView() {
       <Portrait imgHref={img2} name="Family" totalPhotos={95} />
       <Portrait imgHref={img3} name="Friends" totalPhotos={80} />
       <Portrait imgHref={img4} name="Work" totalPhotos={60} />
+      <Portrait name="Work" totalPhotos={60} />
     </div>
   );
 }
