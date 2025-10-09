@@ -1,0 +1,16 @@
+{
+   "base":{
+    "delete": "Supprimer"
+  },
+  "nav": {
+    "home": "Accueil",
+    "profile": "Profil"
+  },
+  "uploadView": {
+    "title": "Importez vos photos",
+    "dropzone": "Cliquez pour choisir vos photos",
+    "button": "Télécharger",
+    "fileLimit": "Vous pouvez télécharger jusqu'à 5 fichiers à la fois.",
+    "addMore": "Ajouter plus de fichiers"
+  }
+}

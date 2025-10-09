@@ -2,8 +2,10 @@ import { useRef, useState } from "react";
 import { Icon } from "../../shared/UI/Icon/Icon";
 import "./upload.css";
 import { ImageCard } from "./components/ImageCard";
+import { useTranslation } from "react-i18next";
 
 export function UploadView() {
+  const { t } = useTranslation();
   const [imagesList, setImagesList] = useState<File[]>([]);
   const inputs = useRef<HTMLInputElement>(null);
   function updatePicList(e: React.ChangeEvent<HTMLInputElement>) {
@@ -12,9 +14,12 @@ export function UploadView() {
 
     if (files.length === 0) return;
     if (files.length > 10 || imagesList.length + files.length > 10) {
-      alert("You can only upload up to 10 images.");
+      alert(t("uploadView.alert"));
       const imagesQuantityToLimit = 10 - imagesList.length;
-      setImagesList((prev) => [...prev, ...files.slice(0, imagesQuantityToLimit)]);
+      setImagesList((prev) => [
+        ...prev,
+        ...files.slice(0, imagesQuantityToLimit),
+      ]);
       return;
     }
     setImagesList((prev) => [...prev, ...files]);
@@ -28,7 +33,7 @@ export function UploadView() {
     <section className="upload-view">
       {imagesList.length > 0 ? (
         <div className="upload-view--image-list">
-          <h1>Upload your photos</h1>
+          <h1>{t("uploadView.title")}</h1>
           <div className="upload-view--preview-image">
             {imagesList.map((file, index) => {
               return (
@@ -53,7 +58,7 @@ export function UploadView() {
               <div className="upload-button">
                 <Icon name="plus" size="base" color="white" />
               </div>
-              <h2>Add more photos</h2>
+              <h2>{t("uploadView.addMore")}</h2>
             </div>
           </div>
         </div>
@@ -72,8 +77,8 @@ export function UploadView() {
           <div className="upload-button">
             <Icon name="upload" size="2xl" color="white" />
           </div>
-          <h2>Import your photos</h2>
-          <p>Click to choose your photos</p>
+          <h2>{t("uploadView.title")}</h2>
+          <p>{t("uploadView.dropzone")}</p>
         </div>
       )}
     </section>

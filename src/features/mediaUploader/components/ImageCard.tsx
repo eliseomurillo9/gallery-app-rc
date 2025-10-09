@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../shared/UI/Button/Button';
 import './imageCard.css';
 type ImageCardProps = {
@@ -5,6 +6,7 @@ type ImageCardProps = {
   imageDelete?: () => void;
 }
 export function ImageCard({ file, imageDelete }: Readonly<ImageCardProps>) {
+   const { t } = useTranslation();
   const fileName = file.name.split('.')[0];
   return (
     <div className="image-card card-animation">
@@ -17,7 +19,7 @@ export function ImageCard({ file, imageDelete }: Readonly<ImageCardProps>) {
         <p>{file.type}</p>
       </div>
       <div className='image-card__action'>
-      <Button variant='danger' placeholder='Delete' size='large' action={imageDelete} />
+      <Button variant='danger' placeholder={t('base.delete')} size='large' action={imageDelete} />
       </div>
     </div>
   );
