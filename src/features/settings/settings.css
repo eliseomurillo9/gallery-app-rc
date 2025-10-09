@@ -1,0 +1,40 @@
+.settings-view {
+  width: 90%;
+  margin: auto;
+  h1 {
+    color: var(--color-on-surface);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin: 0.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.settings-view__language-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.4rem;
+  width: 100%;
+}
+
+.settings-view__language-list__item,
+.settings-view__language-btn {
+  background-color: var(--color-surface-a0);
+  border: none;
+  width: 100%;
+  display: flex;
+  border-bottom: solid var(--color-surface-a50) 0.01rem;
+
+  padding: 0.5rem 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.settings-view__language-list__item {
+  background-color: var(--color-primary-a20);
+  padding-left: 0.4rem;
+}
+
+.settings-view__language-list__item:hover, .active-language {
+  background-color: var(--color-primary);
+}

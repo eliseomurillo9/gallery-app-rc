@@ -12,5 +12,10 @@
     "button": "Télécharger",
     "fileLimit": "Vous pouvez télécharger jusqu'à 5 fichiers à la fois.",
     "addMore": "Ajouter plus de fichiers"
+  },
+  "languages": {
+    "english": "Anglais",
+    "spanish": "Espagnol",
+    "french": "Français"
   }
 }

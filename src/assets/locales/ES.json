@@ -12,5 +12,10 @@
     "button": "Subir",
     "fileLimit": "Puedes subir hasta 5 archivos a la vez.",
     "addMore": "Agregar más archivos"
+  },
+  "languages": {
+    "english": "Ingles",
+    "spanish": "Espanol",
+    "french": "Frances"
   }
 }
