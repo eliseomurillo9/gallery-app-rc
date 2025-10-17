@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Icon } from "../../shared/UI/Icon/Icon";
 import "./upload.css";
 import { ImageCard } from "./components/ImageCard";
@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 export function UploadView() {
   const { t } = useTranslation();
   const [imagesList, setImagesList] = useState<File[]>([]);
-  const inputs = useRef<HTMLInputElement>(null);
   function updatePicList(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     const files = Array.from(e.target.files || []);
@@ -47,7 +46,6 @@ export function UploadView() {
             <div className="upload-view--add-more">
               <form action="" className="upload-view--form">
                 <input
-                  ref={inputs}
                   type="file"
                   multiple
                   accept="image/*"
@@ -66,7 +64,6 @@ export function UploadView() {
         <div className="upload-view--no-images">
           <form action="" className="upload-view--form">
             <input
-              ref={inputs}
               type="file"
               multiple
               accept="image/*"

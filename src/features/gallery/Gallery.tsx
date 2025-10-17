@@ -5,6 +5,8 @@ import img3 from "../../assets/img/20250718_172445.jpg";
 import img4 from "../../assets/img/20250712_152450.jpg";
 import { Fragment } from "react/jsx-runtime";
 import "./Gallery.css";
+import { ImageModal } from "./components/imageModal/ImageModal";
+import { useState } from "react";
 
 const images = [
   { src: img1, alt: "Image 1" },
@@ -14,34 +16,31 @@ const images = [
 ];
 
 export function Gallery() {
-  function handleClick(image: { src: string; alt: string }) {
-    console.log("Image clicked:", image);
-    return (
-      <div>
-        <dialog>
-          <h1>COUCOU</h1>
-          <img src={image.src} alt={image.alt} />
-        </dialog>
-      </div>
-    );
+  const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState({ src: "", alt: "" });
+
+  function handleClick(open: boolean, image?: { src: string; alt: string }) {
+    console.log("Image clicked:", image, open);
+    setIsOpen(open);
+    if (image) {
+      setImage(image);
+    }
   }
+
   return (
     <div className="gallery">
       {images.map((image, index) => {
         return (
           <Fragment key={index}>
-            <dialog>
-              <h1>COUCOU</h1>
-              <img src={image.src} alt={image.alt} />
-            </dialog>
             {ImgElement({
               ImgSrc: image.src,
               altText: image.alt,
-              action: () => console.log(`Clicked on ${image.alt}`),
+              action: () => handleClick(true, image),
             })}
           </Fragment>
         );
       })}
+      {image.src !== "" && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image} />}
     </div>
   );
 }
