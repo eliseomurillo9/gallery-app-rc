@@ -13,12 +13,21 @@
     "fileLimit": "Puedes subir hasta 5 archivos a la vez.",
     "addMore": "Agregar más archivos"
   },
+  "profile": {
+    "title": "Perfil de usuario"
+  },
   "login": {
     "welcome": "¡Bienvenido de nuevo!",
     "emailPlaceholder": "Ingresa tu correo electrónico",
     "passwordPlaceholder": "Ingresa tu contraseña",
     "rememberMe": "Recuérdame",
     "signInButton": "Iniciar sesión"
+  },
+  "albums": {
+    "portrait": {
+      "key_one": "foto",
+      "key_other": "fotos"
+    }
   },
   "languages": {
     "english": "Inglés",

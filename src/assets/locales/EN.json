@@ -13,12 +13,21 @@
     "fileLimit": "You can upload up to 5 files at a time.",
     "addMore": "Add more files"
   },
+  "profile": {
+    "title" : "User Profile"
+  },
   "login": {
     "welcome": "Welcome Back!",
     "emailPlaceholder": "Enter your email",
     "passwordPlaceholder": "Enter your password",
     "rememberMe": "Remember me",
     "signInButton": "Sign In"
+  },
+  "albums": {
+    "portrait":{
+      "key_one": "photo",
+      "key_other": "photos"
+    }
   },
   "languages": {
     "english": "English",
