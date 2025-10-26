@@ -1,5 +1,5 @@
 {
-  "base":{
+  "base": {
     "delete": "Eliminar"
   },
   "nav": {
@@ -13,9 +13,16 @@
     "fileLimit": "Puedes subir hasta 5 archivos a la vez.",
     "addMore": "Agregar más archivos"
   },
+  "login": {
+    "welcome": "¡Bienvenido de nuevo!",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "rememberMe": "Recuérdame",
+    "signInButton": "Iniciar sesión"
+  },
   "languages": {
-    "english": "Ingles",
-    "spanish": "Espanol",
-    "french": "Frances"
+    "english": "Inglés",
+    "spanish": "Español",
+    "french": "Francés"
   }
 }

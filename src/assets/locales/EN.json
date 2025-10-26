@@ -13,6 +13,13 @@
     "fileLimit": "You can upload up to 5 files at a time.",
     "addMore": "Add more files"
   },
+  "login": {
+    "welcome": "Welcome Back!",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "signInButton": "Sign In"
+  },
   "languages": {
     "english": "English",
     "spanish": "Spanish",

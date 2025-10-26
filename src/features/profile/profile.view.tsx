@@ -21,9 +21,9 @@ export function ProfileView() {
         </div>
         <Tabs
           tabs={[
-            { name: "gallery", active: true, link: "/gallery" },
-            { name: "album", active: false, link: "/albums" },
-            { name: "settings", active: false, link: "/settings" },
+            { name: "gallery", active: true, link: "/profile/gallery" },
+            { name: "album", active: false, link: "/profile/albums" },
+            { name: "settings", active: false, link: "/profile/settings" },
           ]}
         />
         <div className="profile-view-layout">

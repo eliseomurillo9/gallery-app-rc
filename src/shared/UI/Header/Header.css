@@ -10,4 +10,9 @@
   color: #ffffff;
   font-weight: bold;
   font-size: var(--text-2xl);
+
+  img {
+    height: 2rem;
+    width: auto;
+  }
 }

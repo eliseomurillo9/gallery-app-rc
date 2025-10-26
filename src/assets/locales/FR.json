@@ -13,6 +13,13 @@
     "fileLimit": "Vous pouvez télécharger jusqu'à 5 fichiers à la fois.",
     "addMore": "Ajouter plus de fichiers"
   },
+  "login": {
+    "welcome": "Bienvenue à nouveau!",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "signInButton": "Se connecter"
+  },
   "languages": {
     "english": "Anglais",
     "spanish": "Espagnol",
