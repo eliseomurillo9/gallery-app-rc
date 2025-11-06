@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 201,
+      "title": "Vacation 2023",
+      "portrait": "https://example.com/photos/alice1.jpg",
+      "itemsQuantity": 3,
+      "photos": [
+        {
+          "id": 101,
+          "url": "https://example.com/photos/alice1.jpg"
+        },
+        {
+          "id": 102,
+          "url": "https://example.com/photos/alice2.jpg"
+        },
+        {
+          "id": 103,
+          "url": "https://example.com/photos/alice3.jpg"
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "title": "Family",
+      "portrait": "https://example.com/photos/alice3.jpg",
+      "itemsQuantity": 2,
+      "photos": [
+        {
+          "id": 104,
+          "url": "https://example.com/photos/alice4.jpg"
+        },
+        {
+          "id": 105,
+          "url": "https://example.com/photos/alice5.jpg"
+        }
+      ]
+    }
+  ] 
+}

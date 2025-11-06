@@ -6,19 +6,36 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import loader from "../../assets/img/security GIF.gif";
+import { userStore } from "../../store/user";
+import { authUser } from "../../services/authService";
+import { DEFAULT_LOGIN_VALUE } from "../../constants/login";
 
 export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const signInHandler = (e: React.FormEvent) => {
+
+  const signInHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowLoader(true)
-    setTimeout(() => {
-      navigate({ to: "/gallery" });
-    }, 4000);
+    const form = new FormData(e.currentTarget as HTMLFormElement);
+    const values = Object.fromEntries(form);
+    const email = String(values.email) || DEFAULT_LOGIN_VALUE.EMAIL;
+ 
+    authUser(email);
+    const user = userStore.getUser();
+
+    if (user) {
+      setShowLoader(true);
+      setTimeout(() => {
+        navigate({ to: "/gallery" });
+      }, 4000);
+      return;
+    }
+
+    throw Error("Error signing in, retry sign in as guest");
   };
+
   return (
     <section className="sign-in--view">
       <div className="sign-in--container">
@@ -66,17 +83,19 @@ export function SignIn() {
           />
         </form>
       </div>
-      {showLoader && <div className="modal-loader--container">
-        <img src={loader} alt="Computer man" />
-        <div className="modal-loader--loader">
-          <h2>Loading</h2>
-          <div className="modal-loader--dots">
-            <div className="modal-loader--dots--dot"></div>
-            <div className="modal-loader--dots--dot"></div>
-            <div className="modal-loader--dots--dot"></div>
+      {showLoader && (
+        <div className="modal-loader--container">
+          <img src={loader} alt="Computer man" />
+          <div className="modal-loader--loader">
+            <h2>Loading</h2>
+            <div className="modal-loader--dots">
+              <div className="modal-loader--dots--dot"></div>
+              <div className="modal-loader--dots--dot"></div>
+              <div className="modal-loader--dots--dot"></div>
+            </div>
           </div>
         </div>
-      </div>}
+      )}
     </section>
   );
 }
