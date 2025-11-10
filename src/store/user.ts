@@ -7,23 +7,35 @@ class UserStore {
 
   public static getUserInstance() {
     if (!UserStore.instance) {
-      console.log('not instance')
-      UserStore.instance = new UserStore()
+      UserStore.instance = new UserStore();
     }
-    console.log("instance")
     return UserStore.instance;
   }
   public setUser(userInfo: User): void {
-    console.log("SeTting user info")
     this.user = userInfo;
   }
 
-  public getUser(): User | undefined{
-    console.log("getting user info")
+  public getUser(): User | undefined {
     if (!this.user) {
       return;
     }
     return this.user;
+  }
+
+  public getUserPhotos() {
+    if (!this.user?.photos) {
+      return;
+    }
+
+    return this.user.photos;
+  }
+
+  public getUserAlbums() {
+    if (!this.user?.albums) {
+      return;
+    }
+
+    return this.user.albums;
   }
 }
 

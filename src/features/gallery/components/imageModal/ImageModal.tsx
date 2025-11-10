@@ -1,12 +1,14 @@
+import type { Photo } from "@/types/Photo";
 import { Icon } from "../../../../shared/UI/Icon/Icon";
 import "./imageModal.css";
 type ImageModalProps = {
   isOpen: boolean;
   toggleModal: (open: boolean) => void;
-  image: { src: string; alt: string };
+  image: Photo["id"];
 };
 
 export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
+  console.log(image);
   const toolBar = [
     { name: "back", icon: "back", action: () => toggleModal(false) },
     {
@@ -32,7 +34,7 @@ export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
               ))}
             </div>
           </div>
-          <img src={image.src} alt={image.alt} className="modal-image" />
+          <img src="http://localhost:5173/public/images/20250320_164613.webp" alt="user photo" className="modal-image" />
         </div>
       </div>
     )

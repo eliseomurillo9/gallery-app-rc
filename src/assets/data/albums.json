@@ -8,15 +8,15 @@
       "photos": [
         {
           "id": 101,
-          "url": "https://example.com/photos/alice1.jpg"
+          "url": "http://localhost:5173/public/images/20250320_164613.webp"
+        },
+         {
+          "id": 105,
+          "url": "http://localhost:5173/public/images/20250713_163532.webp"
         },
         {
           "id": 102,
-          "url": "https://example.com/photos/alice2.jpg"
-        },
-        {
-          "id": 103,
-          "url": "https://example.com/photos/alice3.jpg"
+          "url": "http://localhost:5173/public/images/20250614_112314.webp"
         }
       ]
     },

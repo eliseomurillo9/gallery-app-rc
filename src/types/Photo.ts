@@ -1,5 +1,5 @@
 export type Photo = {
-  uuid: string;
+  id: number;
   creationDate: string;
   link: string;
   metadata: Metadata;

@@ -4,40 +4,41 @@
       "id": 1,
       "name": "Alice Johnson",
       "email": "alice.johnson@example.com",
-      "avatar": "https://drive.usercontent.google.com/download?id=16msgihaL4l9lx-ZPav8arElyErBqs6Ni",
+      "avatar": "https://drive.google.com/thumbnail?id=16msgihaL4l9lx-ZPav8arElyErBqs6Ni&sz=w1000",
       "photos": [
         {
           "id": 101,
-          "url": "https://drive.usercontent.google.com/download?id=1iYBcikg6MX0SY1Tlp9dfZbIg3BonbyT1"
+          "url": "http://localhost:5173/public/images/20250320_164613.webp"
+        },
+         {
+          "id": 105,
+          "url": "http://localhost:5173/public/images/20250713_163532.webp"
         },
         {
           "id": 102,
-          "url": "https://drive.usercontent.google.com/download?id=1qH8uyCgAX08pkobM77FxrJBoXtidJ5Kn"
+          "url": "http://localhost:5173/public/images/20250614_112314.webp"
         },
         {
           "id": 103,
-          "url": "https://drive.usercontent.google.com/download?id=1HnGQoK9w8qnOXy8dLpBM5ayk4bbSiMq-"
+          "url": "http://localhost:5173/public/images/20250712_152450.webp"
         },
         {
           "id": 104,
-          "url": "https://drive.usercontent.google.com/download?id=1OWydPbreWRyBSwYHNpomYb90nM0to2io"
-        },
-        {
-          "id": 105,
-          "url": "https://drive.usercontent.google.com/download?id=1p1CsIVGQkqc134joHmv1MQRkvqGIULX3"
+          "url": "http://localhost:5173/public/images/20250713_150246.webp"
         }
+       
       ],
       "albums": [
         {
           "id": 201,
           "title": "Vacation 2023",
-          "portrait": "https://drive.usercontent.google.com/download?id=1iYBcikg6MX0SY1Tlp9dfZbIg3BonbyT1",
+          "portrait": "https://drive.google.com/thumbnail?id=1iYBcikg6MX0SY1Tlp9dfZbIg3BonbyT1&sz=w1000",
           "itemsQuantity": 3
         },
         {
           "id": 202,
           "title": "Family",
-          "portrait": "https://drive.usercontent.google.com/download?id=1p1CsIVGQkqc134joHmv1MQRkvqGIULX3",
+          "portrait": "https://drive.google.com/thumbnail?id=1p1CsIVGQkqc134joHmv1MQRkvqGIULX3&sz=w1000",
           "itemsQuantity": 2
         }
       ]

@@ -1,7 +1,8 @@
 .gallery {
-  column-width: 200px;   /* preferred min width */
-  column-gap: 0.5rem;    /* reduce middle spacing */
+  column-width: 200px;  
+  column-gap: 0.5rem;
   margin: 0.5rem 0;
   padding: 1rem 0.43rem;
+  max-width: 100vw;
 }
 

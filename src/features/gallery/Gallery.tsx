@@ -1,46 +1,40 @@
 import { ImgElement } from "./components/imgElement/ImgElement";
-import img1 from "../../assets/img/20250705_153641.jpg";
-import img2 from "../../assets/img/20250713_150246.jpg";
-import img3 from "../../assets/img/20250718_172445.jpg";
-import img4 from "../../assets/img/20250712_152450.jpg";
 import { Fragment } from "react/jsx-runtime";
 import "./Gallery.css";
 import { ImageModal } from "./components/imageModal/ImageModal";
 import { useState } from "react";
-
-const images = [
-  { src: img1, alt: "Image 1" },
-  { src: img2, alt: "Image 2" },
-  { src: img3, alt: "Image 3" },
-  { src: img4, alt: "Image 4" },
-];
+import { userStore } from "../../store/user";
+import type { Photo } from "@/types/Photo";
 
 export function Gallery() {
   const [isOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState({ src: "", alt: "" });
-
-  function handleClick(open: boolean, image?: { src: string; alt: string }) {
-    console.log("Image clicked:", image, open);
+  const [image, setImage] = useState({id: 0});
+  console.log('Runiiing')
+  const photosStore = userStore.getUserPhotos()
+  console.log(photosStore)
+  function handleClick(open: boolean, photo?: Photo['id']) {
+    console.log("Image clicked:", photo);
     setIsOpen(open);
-    if (image) {
+    if (photo) {
       setImage(image);
+      console.log(image)
     }
   }
 
   return (
     <div className="gallery">
-      {images.map((image, index) => {
+      {photosStore ? photosStore.map((photo) => {
         return (
-          <Fragment key={index}>
+          <Fragment key={photo.id}>
             {ImgElement({
-              ImgSrc: image.src,
-              altText: image.alt,
-              action: () => handleClick(true, image),
+              ImgSrc: photo.url,
+              altText: 'Image from user album',
+              action: () => handleClick(true, photo.id),
             })}
           </Fragment>
         );
-      })}
-      {image.src !== "" && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image} />}
+      }) : <pre>No photos</pre>}
+      {image && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />}
     </div>
   );
 }
