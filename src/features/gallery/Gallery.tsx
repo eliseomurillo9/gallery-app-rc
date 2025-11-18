@@ -9,14 +9,12 @@ import type { Photo } from "@/types/Photo";
 export function Gallery() {
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState({id: 0});
-  console.log('Runiiing')
+
   const photosStore = userStore.getUserPhotos()
-  console.log(photosStore)
   function handleClick(open: boolean, photo?: Photo['id']) {
-    console.log("Image clicked:", photo);
     setIsOpen(open);
     if (photo) {
-      setImage(image);
+      setImage({ id: photo });
       console.log(image)
     }
   }
@@ -34,7 +32,7 @@ export function Gallery() {
           </Fragment>
         );
       }) : <pre>No photos</pre>}
-      {image && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />}
+      {image.id && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />}
     </div>
   );
 }

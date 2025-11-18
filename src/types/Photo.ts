@@ -1,7 +1,7 @@
 export type Photo = {
   id: number;
   creationDate: string;
-  link: string;
+  url: string;
   metadata: Metadata;
 };
 
