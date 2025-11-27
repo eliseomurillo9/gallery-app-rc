@@ -15,7 +15,6 @@ export function Gallery() {
     setIsOpen(open);
     if (photo) {
       setImage({ id: photo });
-      console.log(image)
     }
   }
 

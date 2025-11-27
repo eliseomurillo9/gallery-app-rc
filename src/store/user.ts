@@ -15,9 +15,9 @@ class UserStore {
     this.user = userInfo;
   }
 
-  public getUser(): User | undefined {
+  public getUser(): User {
     if (!this.user) {
-      return;
+      throw new Error("User not set");
     }
     return this.user;
   }

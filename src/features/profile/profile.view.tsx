@@ -4,7 +4,10 @@ import { Avatar } from "./components/Avatar";
 import { Tabs } from "./components/tabs/Tabs";
 import "./profile.css";
 import { useTranslation } from "react-i18next";
+import { userStore } from "@/store/user";
 export function ProfileView() {
+  const user = userStore.getUser();
+  const userId = user.id.toString();
   const { t } = useTranslation();
   return (
     <section className="profile-view">
@@ -19,13 +22,22 @@ export function ProfileView() {
       <div className="profile-view__container">
         <div className="profile-view__container__info">
           <Avatar />
-          <h2>John Doe</h2>
+          <h2>{user?.name ?? "Unknown user"}</h2>
         </div>
         <Tabs
           tabs={[
-            { name: "gallery", active: true, link: "/profile/gallery" },
-            { name: "album", active: false, link: "/profile/albums" },
-            { name: "settings", active: false, link: "/profile/settings" },
+            {
+              name: "gallery",
+              link: { path: `/$userId/profile/gallery`, id: userId },
+            },
+            {
+              name: "album",
+              link: { path: `/$userId/profile/albums`, id: userId },
+            },
+            {
+              name: "settings",
+              link: { path: `/$userId/profile/settings`, id: userId },
+            },
           ]}
         />
         <div className="profile-view-layout">
