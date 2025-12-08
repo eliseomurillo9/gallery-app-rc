@@ -21,7 +21,7 @@ export function ProfileView() {
 
       <div className="profile-view__container">
         <div className="profile-view__container__info">
-          <Avatar />
+          <Avatar src={user.avatar}/>
           <h2>{user?.name ?? "Unknown user"}</h2>
         </div>
         <Tabs

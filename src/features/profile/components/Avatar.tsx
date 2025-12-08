@@ -1,4 +1,4 @@
-import Avatarimg from '../../../assets/img/20250616_131630.jpg'
+
 import './Avatar.css'
 type AvatarProp = {
   src?: string
@@ -6,7 +6,7 @@ type AvatarProp = {
 export function Avatar({ src }: AvatarProp) {
   return (
     <div className='avatar-wrapper'>
-      <img src={Avatarimg || src} alt='profile avatar' />
+      <img src={src} alt='profile avatar' />
     </div>
   )
 }

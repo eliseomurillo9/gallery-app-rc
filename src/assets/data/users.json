@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Alice Johnson",
       "email": "alice.johnson@example.com",
-      "avatar": "https://drive.google.com/thumbnail?id=16msgihaL4l9lx-ZPav8arElyErBqs6Ni&sz=w1000",
+      "avatar": "http://localhost:5173/public/images/imrs.avif.jpg",
       "photos": [
         {
           "id": 101,

@@ -28,7 +28,7 @@ export function SignIn() {
     if (user) {
       setShowLoader(true);
       setTimeout(() => {
-        navigate({ to: `${user.id}/gallery` });
+        navigate({ to: '/$userId/gallery', params: {userId: String(user.id)} });
       }, 4000);
       return;
     }
