@@ -11,4 +11,9 @@ type Metadata = {
   exposure: string;
   time: string;
   lens: string;
-}
+};
+
+export type userPhoto = {
+  id: number;
+  url: string;
+};

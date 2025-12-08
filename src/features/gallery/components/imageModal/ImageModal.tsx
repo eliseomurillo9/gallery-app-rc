@@ -2,6 +2,7 @@ import type { Photo } from "@/types/Photo";
 import { Icon } from "../../../../shared/UI/Icon/Icon";
 import "./imageModal.css";
 import { getPhotoById } from "@services/galleryService";
+import { userStore } from "@/store/user";
 type ImageModalProps = {
   isOpen: boolean;
   toggleModal: (open: boolean) => void;
@@ -15,9 +16,11 @@ export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
     {
       name: "trash",
       icon: "trash",
-      action: () => console.log("Trash clicked"),
+      action: () =>  {
+        userStore.deletePhoto(image).finally(() => toggleModal(false));
+      },
     },
-    { name: "add", icon: "plus", action: () => console.log("More clicked") },
+    { name: "add", icon: "plus", action: () => console.log('coucou')},
   ];
   return (
     isOpen && (

@@ -12,10 +12,14 @@ export function Gallery() {
 
   const photosStore = userStore.getUserPhotos()
   function handleClick(open: boolean, photo?: Photo['id']) {
-    setIsOpen(open);
+    
     if (photo) {
       setImage({ id: photo });
+      setIsOpen(open);
+      return;
     }
+
+    setIsOpen(false)
   }
 
   return (

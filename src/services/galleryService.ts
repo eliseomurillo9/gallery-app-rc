@@ -19,3 +19,17 @@ export function getPhotoById(photoId: Photo["id"]): Photo {
 
   return photo
 }
+
+export async function updateGallery(gallery: Photo[]) {
+  const userInfo = window.localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_USER
+  );
+
+  if (!userInfo) {
+     throw Error('User not found in storage')
+  }
+  const user = await JSON.parse(userInfo);
+
+  user.photos = gallery;
+
+  window.localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_USER, JSON.stringify(user));
+}
