@@ -6,6 +6,7 @@
   right: 0;
   left: 0;
   padding: 0.8rem 0.6rem;
+
   background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.75) 0%,
@@ -36,8 +37,6 @@
   border: none;
 }
 
-
-
 .modal-content {
   display: flex;
   justify-content: center;
@@ -48,4 +47,32 @@
   left: 0;
   right: 0;
   margin: auto;
+}
+
+.menu-list {
+  display: flex;
+  gap: 0.2rem;
+  flex-direction: column;
+}
+
+
+.menu-list li {
+  padding-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.3rem;
+  
+  img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    border-radius: 0.3rem;
+  }
+}
+
+
+.menu-list :hover {
+  background-color: var(--color-surface-a20);
+  border-radius: 0.5rem;
 }

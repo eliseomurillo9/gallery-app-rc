@@ -1,7 +1,5 @@
-import type { ReactNode } from "react";
-
 export type Icon = keyof typeof icons;
-export const icons: Record<string, ReactNode> = {
+export const icons = {
   home: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
       <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
@@ -94,4 +92,4 @@ export const icons: Record<string, ReactNode> = {
       <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" />
     </svg>
   ),
-};
+} as const;

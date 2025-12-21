@@ -1,0 +1,40 @@
+.tools-bar-menu {
+  z-index: 1000;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  margin: 3rem 0.5rem 0 auto;
+
+  background-color: var(--color-primary);
+}
+
+.tools-bar--menu--list {
+  display: flex;
+  gap: 0.2rem;
+  flex-direction: column;
+}
+
+.tools-bar--menu--list li {
+  border-bottom: solid 1px var(--color-primary-a20);
+  padding-bottom: 0.3rem;
+
+  img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.tools-bar--menu--list li:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.tools-bar-menu--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 0.05rem var(--color-surface-a50);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+}

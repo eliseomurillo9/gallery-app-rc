@@ -3,24 +3,48 @@ import { Icon } from "../../../../shared/UI/Icon/Icon";
 import "./imageModal.css";
 import { getPhotoById } from "@services/galleryService";
 import { userStore } from "@/store/user";
+import { useState } from "react";
+import { Popover } from "@/shared/UI/Popover/Popover";
+import type { Album, UserAlbum } from "@/types/Album";
+import { addPhotoToAlbum } from "@services/albumService";
 type ImageModalProps = {
   isOpen: boolean;
   toggleModal: (open: boolean) => void;
   image: Photo["id"];
 };
-
 export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
-  const photo = getPhotoById(image)
+  const [openMenu, setOpenMenu] = useState(false);
+  const [albumsList, setAlbumsList] = useState<UserAlbum[]>();
+  const photo = getPhotoById(image);
+
+  const addPhoto = (albumId: Album['id'], photoid: Photo['id'], url: Photo['url']) => {
+    const addToAlbum = addPhotoToAlbum({albumId, photo: {id: photoid, url}})
+
+    if(addToAlbum) {
+      setOpenMenu(false)
+    }
+  }
+  const openAlbumList = () => {
+    setOpenMenu(!openMenu);
+    const getAlbumsList = userStore.getUserAlbums();
+    console.log("---album---", getAlbumsList);
+    setAlbumsList(getAlbumsList);
+  };
+
   const toolBar = [
-    { name: "back", icon: "back", action: () => toggleModal(false) },
+    { name: "back", icon: "back" as const, action: () => toggleModal(false) },
     {
       name: "trash",
-      icon: "trash",
-      action: () =>  {
+      icon: "trash" as const,
+      action: () => {
         userStore.deletePhoto(image).finally(() => toggleModal(false));
       },
     },
-    { name: "add", icon: "plus", action: () => console.log('coucou')},
+    {
+      name: "add",
+      icon: "plus" as const,
+      action: () => openAlbumList(),
+    },
   ];
   return (
     isOpen && (
@@ -38,8 +62,26 @@ export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
               ))}
             </div>
           </div>
-          {photo && <img src={photo.url} alt="user photo" className="modal-image" />}
+          {photo && (
+            <img src={photo.url} alt="user photo" className="modal-image" />
+          )}
         </div>
+        <Popover isOpen={openMenu} title="hello moto">
+          <div>
+            <ul className="menu-list">
+              {albumsList &&
+                albumsList.map((album) => (
+                  <li
+                    key={album.id}
+                    onClick={() => addPhoto(album.id, photo.id, photo.url)}
+                  >
+                    <img src={album.portrait} alt="album portrait" />{" "}
+                    <span>{album.title}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </Popover>
       </div>
     )
   );
