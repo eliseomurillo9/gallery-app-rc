@@ -17,14 +17,14 @@ export function getPhotoById(photoId: Photo["id"]): Photo {
   return photo
 }
 
-export async function updateGallery(gallery: UserPhoto[]) {
+export function updateGallery(gallery: UserPhoto[]) {
   const userInfo = window.localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_USER
   );
 
   if (!userInfo) {
      throw Error('User not found in storage')
   }
-  const user = await JSON.parse(userInfo);
+  const user = JSON.parse(userInfo);
 
   user.photos = gallery;
 

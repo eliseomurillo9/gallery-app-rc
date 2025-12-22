@@ -3,7 +3,7 @@
     {
       "id": 201,
       "title": "Vacation 2023",
-      "portrait": "https://example.com/photos/alice1.jpg",
+      "portrait": "http://localhost:5173/public/images/20250713_163532.webp",
       "itemsQuantity": 3,
       "photos": [
         {
@@ -23,16 +23,16 @@
     {
       "id": 202,
       "title": "Family",
-      "portrait": "https://example.com/photos/alice3.jpg",
+      "portrait": "http://localhost:5173/public/images/20250614_112314.webp",
       "itemsQuantity": 2,
       "photos": [
         {
           "id": 104,
-          "url": "https://example.com/photos/alice4.jpg"
+          "url": "http://localhost:5173/public/images/20250614_112314.webp"
         },
         {
           "id": 105,
-          "url": "https://example.com/photos/alice5.jpg"
+          "url": "http://localhost:5173/public/images/20250713_163532.webp"
         }
       ]
     }

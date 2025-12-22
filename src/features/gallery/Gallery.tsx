@@ -8,34 +8,39 @@ import type { Photo } from "@/types/Photo";
 
 export function Gallery() {
   const [isOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState({id: 0});
+  const [image, setImage] = useState({ id: 0 });
 
-  const photosStore = userStore.getUserPhotos()
-  function handleClick(open: boolean, photo?: Photo['id']) {
-    
+  const photosStore = userStore.getUserPhotos();
+  function handleClick(open: boolean, photo?: Photo["id"]) {
     if (photo) {
       setImage({ id: photo });
       setIsOpen(open);
       return;
     }
 
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
   return (
     <div className="gallery">
-      {photosStore ? photosStore.map((photo) => {
-        return (
-          <Fragment key={photo.id}>
-            {ImgElement({
-              ImgSrc: photo.url,
-              altText: 'Image from user album',
-              action: () => handleClick(true, photo.id),
-            })}
-          </Fragment>
-        );
-      }) : <pre>No photos</pre>}
-      {image.id && <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />}
+      {photosStore ? (
+        photosStore.map((photo) => {
+          return (
+            <Fragment key={photo.id}>
+              {ImgElement({
+                ImgSrc: photo.url,
+                altText: "Image from user album",
+                action: () => handleClick(true, photo.id),
+              })}
+            </Fragment>
+          );
+        })
+      ) : (
+        <pre>No photos</pre>
+      )}
+      {image.id && (
+        <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />
+      )}
     </div>
   );
 }

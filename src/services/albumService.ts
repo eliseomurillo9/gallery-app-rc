@@ -41,3 +41,13 @@ export const addPhotoToAlbum = (params: AddPhotoToAlbumParams) => {
 
   return albums.data[albumIndex];
 };
+
+export const getUserAlbums = () => {
+  const albumsJson = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ALBUMS);
+
+  if (!albumsJson) {
+    throw Error("Albums not found in storage");
+  }
+  const albums = JSON.parse(albumsJson);
+  return albums.data
+}
