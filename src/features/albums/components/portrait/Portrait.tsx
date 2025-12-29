@@ -1,15 +1,31 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { Icon } from "../../../../shared/UI/Icon/Icon";
 import "./portrait.css";
+import { Link } from "@tanstack/react-router";
+import { userStore } from "@/store/user";
 type Props = {
   imgHref?: string;
   name: string;
   totalPhotos?: number;
+  albumId: number;
 };
-export function Portrait({ imgHref, name, totalPhotos }: Readonly<Props>) {
+export function Portrait({
+  imgHref,
+  name,
+  totalPhotos,
+  albumId,
+}: Readonly<Props>) {
   const { t } = useTranslation();
+  const user = userStore.getUser();
   return (
-    <a href="#" className="portrait-view">
+    <Link
+      to="/$userId/album/$albumId"
+      params={{ userId: String(user.id), albumId: String(albumId) }}
+      search={{
+        albumId,
+      }}
+      className="portrait-view"
+    >
       <div className="portrait-view__img">
         {imgHref ? (
           <img
@@ -25,8 +41,10 @@ export function Portrait({ imgHref, name, totalPhotos }: Readonly<Props>) {
       </div>
       <div className="portrait-view__info">
         <h2>{name}</h2>
-        <p>{totalPhotos} {t("albums.portrait.key", {count: totalPhotos})}</p>
+        <p>
+          {totalPhotos} {t("albums.portrait.key", { count: totalPhotos })}
+        </p>
       </div>
-    </a>
+    </Link>
   );
 }

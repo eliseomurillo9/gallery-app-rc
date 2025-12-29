@@ -3,14 +3,16 @@ import { Fragment } from "react/jsx-runtime";
 import "./Gallery.css";
 import { ImageModal } from "./components/imageModal/ImageModal";
 import { useState } from "react";
-import { userStore } from "../../store/user";
-import type { Photo } from "@/types/Photo";
+import type { Photo, UserPhoto } from "@/types/Photo"
 
-export function Gallery() {
+interface GalleryProps {
+  photos: UserPhoto[];
+}
+
+export function Gallery({ photos }: GalleryProps) {
+  console.log(photos)
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState({ id: 0 });
-
-  const photosStore = userStore.getUserPhotos();
   function handleClick(open: boolean, photo?: Photo["id"]) {
     if (photo) {
       setImage({ id: photo });
@@ -23,8 +25,8 @@ export function Gallery() {
 
   return (
     <div className="gallery">
-      {photosStore ? (
-        photosStore.map((photo) => {
+      {photos  && photos.length !== 0 ? (
+        photos.map((photo: UserPhoto) => {
           return (
             <Fragment key={photo.id}>
               {ImgElement({

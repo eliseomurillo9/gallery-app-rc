@@ -1,9 +1,9 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
-import type { UserAlbum } from "@/types/Album";
+import type { Album } from "@/types/Album";
 import type { Photo, UserPhoto } from "@/types/Photo";
 
 type AddPhotoToAlbumParams = {
-  albumId: UserAlbum["id"];
+  albumId: Album["id"];
   photo: {
     id: Photo["id"];
     url: Photo["url"];
@@ -19,7 +19,7 @@ export const addPhotoToAlbum = (params: AddPhotoToAlbumParams) => {
   const albums = JSON.parse(albumsJson);
 
   const albumIndex = albums.data.findIndex(
-    (album: UserAlbum) => album.id === albumId
+    (album: Album) => album.id === albumId
   );
 
   if (albumIndex === -1) {
@@ -50,4 +50,23 @@ export const getUserAlbums = () => {
   }
   const albums = JSON.parse(albumsJson);
   return albums.data
+}
+
+export const getAlbumById = (albumId: Album["id"]) => {
+  const albumsJson = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ALBUMS);
+
+  if (!albumsJson) {
+    throw Error("Albums not found in storage");
+  }
+  const albums = JSON.parse(albumsJson);
+
+  const album = albums.data.find(
+    (album: Album) => album.id === albumId
+  );
+
+  if (!album) {
+    throw Error("Album not found");
+  }
+
+  return album.photos;
 }

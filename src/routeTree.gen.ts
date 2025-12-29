@@ -11,12 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignInRouteImport } from './routes/signIn'
 import { Route as UserIdRouteRouteImport } from './routes/$userId/route'
+import { Route as UserIdIndexRouteImport } from './routes/$userId/index'
 import { Route as UserIdUploadRouteImport } from './routes/$userId/upload'
-import { Route as UserIdGalleryRouteImport } from './routes/$userId/gallery'
 import { Route as UserIdProfileRouteRouteImport } from './routes/$userId/profile/route'
 import { Route as UserIdProfileSettingsRouteImport } from './routes/$userId/profile/settings'
 import { Route as UserIdProfileGalleryRouteImport } from './routes/$userId/profile/gallery'
 import { Route as UserIdProfileAlbumsRouteImport } from './routes/$userId/profile/albums'
+import { Route as UserIdAlbumAlbumIdRouteImport } from './routes/$userId/album/$albumId'
 
 const SignInRoute = SignInRouteImport.update({
   id: '/signIn',
@@ -28,14 +29,14 @@ const UserIdRouteRoute = UserIdRouteRouteImport.update({
   path: '/$userId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UserIdIndexRoute = UserIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UserIdRouteRoute,
+} as any)
 const UserIdUploadRoute = UserIdUploadRouteImport.update({
   id: '/upload',
   path: '/upload',
-  getParentRoute: () => UserIdRouteRoute,
-} as any)
-const UserIdGalleryRoute = UserIdGalleryRouteImport.update({
-  id: '/gallery',
-  path: '/gallery',
   getParentRoute: () => UserIdRouteRoute,
 } as any)
 const UserIdProfileRouteRoute = UserIdProfileRouteRouteImport.update({
@@ -58,23 +59,29 @@ const UserIdProfileAlbumsRoute = UserIdProfileAlbumsRouteImport.update({
   path: '/albums',
   getParentRoute: () => UserIdProfileRouteRoute,
 } as any)
+const UserIdAlbumAlbumIdRoute = UserIdAlbumAlbumIdRouteImport.update({
+  id: '/album/$albumId',
+  path: '/album/$albumId',
+  getParentRoute: () => UserIdRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/$userId': typeof UserIdRouteRouteWithChildren
   '/signIn': typeof SignInRoute
   '/$userId/profile': typeof UserIdProfileRouteRouteWithChildren
-  '/$userId/gallery': typeof UserIdGalleryRoute
   '/$userId/upload': typeof UserIdUploadRoute
+  '/$userId/': typeof UserIdIndexRoute
+  '/$userId/album/$albumId': typeof UserIdAlbumAlbumIdRoute
   '/$userId/profile/albums': typeof UserIdProfileAlbumsRoute
   '/$userId/profile/gallery': typeof UserIdProfileGalleryRoute
   '/$userId/profile/settings': typeof UserIdProfileSettingsRoute
 }
 export interface FileRoutesByTo {
-  '/$userId': typeof UserIdRouteRouteWithChildren
   '/signIn': typeof SignInRoute
   '/$userId/profile': typeof UserIdProfileRouteRouteWithChildren
-  '/$userId/gallery': typeof UserIdGalleryRoute
   '/$userId/upload': typeof UserIdUploadRoute
+  '/$userId': typeof UserIdIndexRoute
+  '/$userId/album/$albumId': typeof UserIdAlbumAlbumIdRoute
   '/$userId/profile/albums': typeof UserIdProfileAlbumsRoute
   '/$userId/profile/gallery': typeof UserIdProfileGalleryRoute
   '/$userId/profile/settings': typeof UserIdProfileSettingsRoute
@@ -84,8 +91,9 @@ export interface FileRoutesById {
   '/$userId': typeof UserIdRouteRouteWithChildren
   '/signIn': typeof SignInRoute
   '/$userId/profile': typeof UserIdProfileRouteRouteWithChildren
-  '/$userId/gallery': typeof UserIdGalleryRoute
   '/$userId/upload': typeof UserIdUploadRoute
+  '/$userId/': typeof UserIdIndexRoute
+  '/$userId/album/$albumId': typeof UserIdAlbumAlbumIdRoute
   '/$userId/profile/albums': typeof UserIdProfileAlbumsRoute
   '/$userId/profile/gallery': typeof UserIdProfileGalleryRoute
   '/$userId/profile/settings': typeof UserIdProfileSettingsRoute
@@ -96,18 +104,19 @@ export interface FileRouteTypes {
     | '/$userId'
     | '/signIn'
     | '/$userId/profile'
-    | '/$userId/gallery'
     | '/$userId/upload'
+    | '/$userId/'
+    | '/$userId/album/$albumId'
     | '/$userId/profile/albums'
     | '/$userId/profile/gallery'
     | '/$userId/profile/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/$userId'
     | '/signIn'
     | '/$userId/profile'
-    | '/$userId/gallery'
     | '/$userId/upload'
+    | '/$userId'
+    | '/$userId/album/$albumId'
     | '/$userId/profile/albums'
     | '/$userId/profile/gallery'
     | '/$userId/profile/settings'
@@ -116,8 +125,9 @@ export interface FileRouteTypes {
     | '/$userId'
     | '/signIn'
     | '/$userId/profile'
-    | '/$userId/gallery'
     | '/$userId/upload'
+    | '/$userId/'
+    | '/$userId/album/$albumId'
     | '/$userId/profile/albums'
     | '/$userId/profile/gallery'
     | '/$userId/profile/settings'
@@ -144,18 +154,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserIdRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$userId/': {
+      id: '/$userId/'
+      path: '/'
+      fullPath: '/$userId/'
+      preLoaderRoute: typeof UserIdIndexRouteImport
+      parentRoute: typeof UserIdRouteRoute
+    }
     '/$userId/upload': {
       id: '/$userId/upload'
       path: '/upload'
       fullPath: '/$userId/upload'
       preLoaderRoute: typeof UserIdUploadRouteImport
-      parentRoute: typeof UserIdRouteRoute
-    }
-    '/$userId/gallery': {
-      id: '/$userId/gallery'
-      path: '/gallery'
-      fullPath: '/$userId/gallery'
-      preLoaderRoute: typeof UserIdGalleryRouteImport
       parentRoute: typeof UserIdRouteRoute
     }
     '/$userId/profile': {
@@ -186,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserIdProfileAlbumsRouteImport
       parentRoute: typeof UserIdProfileRouteRoute
     }
+    '/$userId/album/$albumId': {
+      id: '/$userId/album/$albumId'
+      path: '/album/$albumId'
+      fullPath: '/$userId/album/$albumId'
+      preLoaderRoute: typeof UserIdAlbumAlbumIdRouteImport
+      parentRoute: typeof UserIdRouteRoute
+    }
   }
 }
 
@@ -206,14 +223,16 @@ const UserIdProfileRouteRouteWithChildren =
 
 interface UserIdRouteRouteChildren {
   UserIdProfileRouteRoute: typeof UserIdProfileRouteRouteWithChildren
-  UserIdGalleryRoute: typeof UserIdGalleryRoute
   UserIdUploadRoute: typeof UserIdUploadRoute
+  UserIdIndexRoute: typeof UserIdIndexRoute
+  UserIdAlbumAlbumIdRoute: typeof UserIdAlbumAlbumIdRoute
 }
 
 const UserIdRouteRouteChildren: UserIdRouteRouteChildren = {
   UserIdProfileRouteRoute: UserIdProfileRouteRouteWithChildren,
-  UserIdGalleryRoute: UserIdGalleryRoute,
   UserIdUploadRoute: UserIdUploadRoute,
+  UserIdIndexRoute: UserIdIndexRoute,
+  UserIdAlbumAlbumIdRoute: UserIdAlbumAlbumIdRoute,
 }
 
 const UserIdRouteRouteWithChildren = UserIdRouteRoute._addFileChildren(

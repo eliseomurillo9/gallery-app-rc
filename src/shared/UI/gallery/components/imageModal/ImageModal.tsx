@@ -1,5 +1,4 @@
 import type { Photo } from "@/types/Photo";
-import { Icon } from "../../../../shared/UI/Icon/Icon";
 import "./imageModal.css";
 import { getPhotoById } from "@services/galleryService";
 import { userStore } from "@/store/user";
@@ -7,6 +6,7 @@ import { useState } from "react";
 import { Popover } from "@/shared/UI/Popover/Popover";
 import type { Album, UserAlbum } from "@/types/Album";
 import { addPhotoToAlbum } from "@services/albumService";
+import { Icon } from "@shared/UI/Icon/Icon";
 type ImageModalProps = {
   isOpen: boolean;
   toggleModal: (open: boolean) => void;
@@ -27,7 +27,6 @@ export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
   const openAlbumList = () => {
     setOpenMenu(!openMenu);
     const getAlbumsList = userStore.getUserAlbums();
-    console.log("---album---", getAlbumsList);
     setAlbumsList(getAlbumsList);
   };
 

@@ -1,13 +1,14 @@
 import { Link, type FileRoutesByPath } from "@tanstack/react-router";
 import "./tabs.css";
-import { Icon } from "../../../../shared/UI/Icon/Icon";
+import { Icon } from "@/shared/UI/Icon/Icon";
+import type { Icon as IconType } from "@shared/UI/Icon/icons";
 type ProfileRoutes =
   | FileRoutesByPath["/$userId/profile/albums"]["fullPath"]
   | FileRoutesByPath["/$userId/profile/gallery"]["fullPath"]
   | FileRoutesByPath["/$userId/profile/settings"]["fullPath"];
 type TabsProps = {
   tabs?: {
-    name: string;
+    name: IconType;
     link: {
       id: string;
       path: ProfileRoutes;

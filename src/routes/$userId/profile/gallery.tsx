@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Gallery } from "../../../features/gallery/Gallery";
+import { userStore } from "@/store/user";
+import { GalleryView } from "@features/gallery/gallery.view";
 
 export const Route = createFileRoute("/$userId/profile/gallery")({
-  component: Gallery,
+  component: GalleryView,
+  loader: () => userStore.getUserPhotos(),
 });
-

@@ -19,6 +19,7 @@ export function AlbumsView() {
           imgHref={album.portrait}
           name={album.title}
           totalPhotos={album.itemsQuantity}
+          albumId={album.id}
         />
       ))}
     </div>
