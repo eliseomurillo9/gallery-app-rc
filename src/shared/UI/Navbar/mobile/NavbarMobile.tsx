@@ -11,7 +11,7 @@ export function NavbarMobile() {
       <nav className="navbar-mobile ">
         <ul className="navbar-mobile--ul">
           <li>
-            <Link to="/$userId/gallery" params={{ userId: user.id.toString() }}>
+            <Link to="/$userId" params={{ userId: user.id.toString() }}>
               <Icon name="gallery" color="white" size="xl" /> {t("nav.home")}
             </Link>
           </li>
