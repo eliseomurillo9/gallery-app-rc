@@ -1,6 +1,7 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import type { Album } from "@/types/Album";
 import type { Photo, UserPhoto } from "@/types/Photo";
+import { getStorageItem, setStorageItem } from "./storageService";
 
 type AddPhotoToAlbumParams = {
   albumId: Album["id"];
@@ -11,62 +12,57 @@ type AddPhotoToAlbumParams = {
 };
 export const addPhotoToAlbum = (params: AddPhotoToAlbumParams) => {
   const { albumId, photo } = params;
-  const albumsJson = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ALBUMS);
+  try {
+    const albumsJson = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
+    const albums = JSON.parse(albumsJson);
 
-  if (!albumsJson) {
-    throw Error("Albums not found in storage");
+    const albumIndex = albums.data.findIndex(
+      (album: Album) => album.id === albumId
+    );
+
+    if (albumIndex === -1) {
+      throw new Error("Album not found");
+    }
+
+    const isPhotoInAlbum = albums.data[albumIndex].photos.some(
+      ({ id }: UserPhoto) => photo.id === id
+    );
+
+    if (isPhotoInAlbum) {
+      throw new Error("Photo already in album");
+    }
+    albums.data[albumIndex].photos.push(photo);
+    setStorageItem(LOCAL_STORAGE_KEYS.ALBUMS, albums);
+
+    return albums.data[albumIndex];
+  } catch (error: unknown) {
+    console.error(error);
   }
-  const albums = JSON.parse(albumsJson);
-
-  const albumIndex = albums.data.findIndex(
-    (album: Album) => album.id === albumId
-  );
-
-  if (albumIndex === -1) {
-    throw Error("Album not found");
-  }
-
-  const isPhotoInAlbum = albums.data[albumIndex].photos.some(
-    ({ id }: UserPhoto) => photo.id === id
-  );
-
-  if (isPhotoInAlbum) {
-    throw Error("Photo already in album");
-  }
-  albums.data[albumIndex].photos.push(photo);
-  window.localStorage.setItem(
-    LOCAL_STORAGE_KEYS.ALBUMS,
-    JSON.stringify(albums)
-  );
-
-  return albums.data[albumIndex];
 };
 
 export const getUserAlbums = () => {
-  const albumsJson = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ALBUMS);
-
-  if (!albumsJson) {
-    throw Error("Albums not found in storage");
+  try {
+    const albums = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
+    return albums.data;
+  } catch (error) {
+    console.error(error);
   }
-  const albums = JSON.parse(albumsJson);
-  return albums.data
-}
+  return [];
+};
 
 export const getAlbumById = (albumId: Album["id"]) => {
-  const albumsJson = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ALBUMS);
+  try {
+    const albums = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
 
-  if (!albumsJson) {
-    throw Error("Albums not found in storage");
+    const album = albums.data.find((album: Album) => album.id === albumId);
+
+    if (!album) {
+      throw new Error("Album not found");
+    }
+
+    return album.photos;
+  } catch (error: unknown) {
+    console.error(error);
   }
-  const albums = JSON.parse(albumsJson);
-
-  const album = albums.data.find(
-    (album: Album) => album.id === albumId
-  );
-
-  if (!album) {
-    throw Error("Album not found");
-  }
-
-  return album.photos;
-}
+  return [];
+};

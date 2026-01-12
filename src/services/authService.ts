@@ -1,29 +1,37 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import { userStore } from "../store/user";
 import type { User } from "../types/User";
+import { getStorageItem, setStorageItem } from "./storageService";
 
-export function authUser(userEmail: User['email']) {
-  const users = window.localStorage.getItem(LOCAL_STORAGE_KEYS.USERS);
+export function authUser(userEmail: User["email"]) {
+  try {
+    const users = getStorageItem(LOCAL_STORAGE_KEYS.USERS);
 
-  if (!users) {
-    throw Error("Users not found, try reloading the page")
+    const user = users.data.find((user: User) => user.email === userEmail);
+
+    if (!user) {
+      throw new Error("User not found, try continue as guest");
+    }
+
+    setStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER, user);
+    userStore.setUser(user);
+  } catch (error: unknown) {
+    console.log(error);
   }
-  const user = JSON.parse(users).data.find((user: User) => user.email === userEmail)
-
-  if (!user) {
-    throw Error('User not found, try continue as guest')
-  }
-  
-  window.localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_USER, JSON.stringify(user))
-  userStore.setUser(user)
 }
 
 export function isUserAuthenticated(): boolean {
-  const userString = window.localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
-  if (!userString) {
+  try {
+    const user = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
+    if (!user) {
+      return false;
+    }
+
+    // If user exists in local storage, update the user store 
+    userStore.setUser(user); // this avoids two requests in the UI component
+    return true;
+  } catch (error) {
+    console.error(error);
     return false;
   }
-  const user: User = JSON.parse(userString);
-  userStore.setUser(user);
-  return true;
 }

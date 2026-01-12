@@ -1,10 +1,10 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import type { Photo, UserPhoto } from "@/types/Photo";
+import { getStorageItem } from "./storageService";
 
-const { localStorage } = globalThis;
 
 export function getPhotoById(photoId: Photo["id"]): Photo {
-  const photosJson = localStorage.getItem(LOCAL_STORAGE_KEYS.PHOTOS);
+  const photosJson = getStorageItem(LOCAL_STORAGE_KEYS.PHOTOS);
   if (!photosJson) {
     throw new Error("Images not found in storage");
   }
@@ -20,7 +20,7 @@ export function getPhotoById(photoId: Photo["id"]): Photo {
 }
 
 export function updateGallery(gallery: UserPhoto[]) {
-  const userInfo = localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
+  const userInfo = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
 
   if (!userInfo) {
     throw new Error("User not found in storage");

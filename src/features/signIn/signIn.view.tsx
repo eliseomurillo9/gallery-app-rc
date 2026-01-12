@@ -20,7 +20,7 @@ export function SignIn() {
     e.preventDefault();
     const form = new FormData(e.currentTarget as HTMLFormElement);
     const values = Object.fromEntries(form);
-    const email = String(values.email) || DEFAULT_LOGIN_VALUE.EMAIL;
+    const email = typeof values.email === 'string' ? values.email : DEFAULT_LOGIN_VALUE.EMAIL;
  
     authUser(email);
     const user = userStore.getUser();
@@ -28,12 +28,12 @@ export function SignIn() {
     if (user) {
       setShowLoader(true);
       setTimeout(() => {
-        navigate({ to: '/$userId/gallery', params: {userId: String(user.id)} });
+        navigate({ to: '/$userId', params: {userId: String(user.id)} });
       }, 4000);
       return;
     }
 
-    throw Error("Error signing in, retry sign in as guest");
+    throw new Error("Error signing in, retry sign in as guest");
   };
 
   return (
