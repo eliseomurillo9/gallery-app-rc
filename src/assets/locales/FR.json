@@ -29,6 +29,10 @@
       "key_other": "photos"
     }
   },
+   "imageModalMenu": {
+    "saveToAlbum": "Sauvegarder dans l'album",
+     "deletePhoto": "Supprimer Photo"
+  },
   "languages": {
     "english": "Anglais",
     "spanish": "Espagnol",

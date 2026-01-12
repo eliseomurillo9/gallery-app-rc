@@ -39,13 +39,14 @@ class UserStore {
     return this.user.albums;
   }
 
-  public async deletePhoto(photoId: number) {
+  public deletePhoto(photoId: number) {
     if (!this.user?.photos) {
       throw new Error("User photos not set");
     }
-    console.log('Deleting photo with ID:', photoId);
-    const updatedPhotoList = this.user.photos.filter(photo => photo.id !== photoId);
-    await updateGallery(updatedPhotoList);
+    const updatedPhotoList = this.user.photos.filter(
+      (photo) => photo.id !== photoId
+    );
+    updateGallery(updatedPhotoList);
     this.user.photos = updatedPhotoList;
   }
 }

@@ -2,7 +2,7 @@ import type { UserPhoto } from "@/types/Photo";
 import { Route } from "@routes/$userId/album/$albumId";
 import { getAlbumById } from "@services/albumService";
 import { Button } from "@shared/UI/Button/Button";
-import { Gallery } from "@shared/UI/gallery/Gallery";
+import { Gallery } from "@shared/UI/Gallery/Gallery";
 import './gallery.css';
 
 import { useEffect, useState } from "react";

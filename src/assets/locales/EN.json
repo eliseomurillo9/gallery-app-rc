@@ -1,5 +1,5 @@
 {
-   "base":{
+  "base": {
     "delete": "Delete"
   },
   "nav": {
@@ -14,7 +14,7 @@
     "addMore": "Add more files"
   },
   "profile": {
-    "title" : "User Profile"
+    "title": "User Profile"
   },
   "login": {
     "welcome": "Welcome Back!",
@@ -24,10 +24,14 @@
     "signInButton": "Sign In"
   },
   "albums": {
-    "portrait":{
+    "portrait": {
       "key_one": "photo",
       "key_other": "photos"
     }
+  },
+  "imageModalMenu": {
+    "saveToAlbum": "Save to Album",
+    "deletePhoto": "Delete Photo"
   },
   "languages": {
     "english": "English",

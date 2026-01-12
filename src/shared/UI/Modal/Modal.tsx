@@ -13,9 +13,7 @@ export function Modal({ isOpen, children }: Readonly<ModalProps>) {
       modal.current.showModal();
     }
   }, [isOpen]);
-  console.log("Modal render with isOpen:", isOpen);
   if (modal.current && isOpen) {
-    console.log("Showing modal");
     modal.current.showModal();
   } else {
     modal.current?.close();

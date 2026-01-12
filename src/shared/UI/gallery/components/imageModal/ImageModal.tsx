@@ -7,44 +7,124 @@ import { Popover } from "@/shared/UI/Popover/Popover";
 import type { Album, UserAlbum } from "@/types/Album";
 import { addPhotoToAlbum } from "@services/albumService";
 import { Icon } from "@shared/UI/Icon/Icon";
+import { t } from "i18next";
+import { Button } from "@shared/UI/Button/Button";
 type ImageModalProps = {
   isOpen: boolean;
   toggleModal: (open: boolean) => void;
-  image: Photo["id"];
+  photoId: Photo["id"];
 };
-export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
+export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
   const [openMenu, setOpenMenu] = useState(false);
   const [albumsList, setAlbumsList] = useState<UserAlbum[]>();
-  const photo = getPhotoById(image);
+  const [modalType, setModalType] = useState<
+    "addToAlbum" | "deletePhoto" | null
+  >(null);
+  const photo = getPhotoById(photoId);
+  const { deletePhoto } = userStore;
 
-  const addPhoto = (albumId: Album['id'], photoid: Photo['id'], url: Photo['url']) => {
-    const addToAlbum = addPhotoToAlbum({albumId, photo: {id: photoid, url}})
+  const addPhoto = (
+    albumId: Album["id"],
+    photoid: Photo["id"],
+    url: Photo["url"]
+  ) => {
+    const addToAlbum = addPhotoToAlbum({
+      albumId,
+      photo: { id: photoid, url },
+    });
 
-    if(addToAlbum) {
-      setOpenMenu(false)
+    if (addToAlbum) {
+      setOpenMenu(false);
     }
-  }
+  };
   const openAlbumList = () => {
+    setModalType("addToAlbum");
     setOpenMenu(!openMenu);
     const getAlbumsList = userStore.getUserAlbums();
     setAlbumsList(getAlbumsList);
   };
 
   const toolBar = [
-    { name: "back", icon: "back" as const, action: () => toggleModal(false) },
+    {
+      name: "back",
+      icon: "back" as const,
+      action: () => {
+        toggleModal(false);
+        setOpenMenu(false);
+      },
+    },
     {
       name: "trash",
       icon: "trash" as const,
       action: () => {
-        userStore.deletePhoto(image).finally(() => toggleModal(false));
+        setModalType("deletePhoto");
+        setOpenMenu(true);
       },
     },
     {
       name: "add",
       icon: "plus" as const,
-      action: () => openAlbumList(),
+      action: openAlbumList,
     },
   ];
+
+  const renderPopover = () => {
+    if (modalType === "addToAlbum") {
+      return (
+        <Popover
+          isOpen={openMenu}
+          title={t("imageModalMenu.saveToAlbum")}
+          close={() => setOpenMenu(false)}
+        >
+          <div className="menu-list">
+            {albumsList ? (
+              albumsList.map((album) => (
+                <button
+                  key={album.id}
+                  onClick={() => addPhoto(album.id, photo.id, photo.url)}
+                >
+                  <img src={album.portrait} alt="album portrait" />{" "}
+                  <span>{album.title}</span>
+                </button>
+              ))
+            ) : (
+              <h2>no albums</h2>
+            )}
+          </div>
+        </Popover>
+      );
+    }
+    if (modalType === "deletePhoto") {
+      return (
+        <Popover
+          isOpen={openMenu}
+          title={t("imageModalMenu.deletePhoto")}
+          close={() => setOpenMenu(false)}
+        >
+          <div className="delete-photo-popover--container">
+            <p>Are you sure you want to delete the image</p>
+            <div className="delete-photo-popover--actions">
+              <Button
+                placeholder="Accept"
+                variant="primary"
+                size="large"
+                action={() => deletePhoto(photoId)}
+              />
+              <Button
+                placeholder="Cancel"
+                variant="danger"
+                size="large"
+                action={() => setOpenMenu(false)}
+              />
+            </div>
+          </div>
+        </Popover>
+      );
+    }
+
+    return null;
+  };
+
   return (
     isOpen && (
       <div className="modal-container">
@@ -62,25 +142,10 @@ export function ImageModal({ isOpen, toggleModal, image }: ImageModalProps) {
             </div>
           </div>
           {photo && (
-            <img src={photo.url} alt="user photo" className="modal-image" />
+            <img src={photo.url} alt="gallery item" className="modal-image" />
           )}
         </div>
-        <Popover isOpen={openMenu} title="hello moto">
-          <div>
-            <ul className="menu-list">
-              {albumsList &&
-                albumsList.map((album) => (
-                  <li
-                    key={album.id}
-                    onClick={() => addPhoto(album.id, photo.id, photo.url)}
-                  >
-                    <img src={album.portrait} alt="album portrait" />{" "}
-                    <span>{album.title}</span>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </Popover>
+        {renderPopover()}
       </div>
     )
   );

@@ -9,7 +9,7 @@ interface GalleryProps {
   photos: UserPhoto[];
 }
 
-export function Gallery({ photos }: GalleryProps) {
+export function Gallery({ photos }: Readonly<GalleryProps>) {
   console.log(photos)
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState({ id: 0 });
@@ -40,8 +40,8 @@ export function Gallery({ photos }: GalleryProps) {
       ) : (
         <pre>No photos</pre>
       )}
-      {image.id && (
-        <ImageModal isOpen={isOpen} toggleModal={setIsOpen} image={image.id} />
+      {!!(image.id) && (
+        <ImageModal isOpen={isOpen} toggleModal={setIsOpen} photoId={image.id} />
       )}
     </div>
   );
