@@ -1,32 +1,15 @@
-import { useState } from "react";
 import { Icon } from "../../shared/UI/Icon/Icon";
 import "./upload.css";
 import { ImageCard } from "./components/ImageCard";
 import { useTranslation } from "react-i18next";
+import { usePhotoUpload } from "./hooks/usePhotoUpload";
 
 export function UploadView() {
   const { t } = useTranslation();
-  const [imagesList, setImagesList] = useState<File[]>([]);
-  function updatePicList(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const files = Array.from(e.target.files || []);
+  
+  const { updatePicList, imagesList, deleteImage } = usePhotoUpload();
 
-    if (files.length === 0) return;
-    if (files.length > 10 || imagesList.length + files.length > 10) {
-      alert(t("uploadView.alert"));
-      const imagesQuantityToLimit = 10 - imagesList.length;
-      setImagesList((prev) => [
-        ...prev,
-        ...files.slice(0, imagesQuantityToLimit),
-      ]);
-      return;
-    }
-    setImagesList((prev) => [...prev, ...files]);
-  }
 
-  function deleteImage(imageIndex: number) {
-    setImagesList(imagesList.filter((_, index) => index !== imageIndex));
-  }
 
   return (
     <section className="upload-view">
@@ -34,10 +17,10 @@ export function UploadView() {
         <div className="upload-view--image-list">
           <h1>{t("uploadView.title")}</h1>
           <div className="upload-view--preview-image">
-            {imagesList.map((file, index) => {
+            {imagesList.map((file: File, index) => {
               return (
                 <ImageCard
-                  key={index}
+                  key={`${index}-${file.lastModified}`}
                   file={file}
                   imageDelete={() => deleteImage(index)}
                 />

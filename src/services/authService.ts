@@ -8,11 +8,11 @@ export function authUser(userEmail: User["email"]) {
     const users = getStorageItem(LOCAL_STORAGE_KEYS.USERS);
 
     const user = users.data.find((user: User) => user.email === userEmail);
-
+    console.log("Found user:", user);
     if (!user) {
       throw new Error("User not found, try continue as guest");
     }
-
+    console.log("Authenticated user:", user);
     setStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER, user);
     userStore.setUser(user);
   } catch (error: unknown) {

@@ -13,10 +13,12 @@ class UserStore {
     return UserStore.instance;
   }
   public setUser(userInfo: User): void {
+    console.log("Setting user:", userInfo);
     this.user = userInfo;
   }
 
   public getUser(): User {
+    console.log("Getting user:", this.user);
     if (!this.user) {
       throw new Error("User not set");
     }

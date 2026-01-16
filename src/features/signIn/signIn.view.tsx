@@ -20,7 +20,7 @@ export function SignIn() {
     e.preventDefault();
     const form = new FormData(e.currentTarget as HTMLFormElement);
     const values = Object.fromEntries(form);
-    const email = typeof values.email === 'string' ? values.email : DEFAULT_LOGIN_VALUE.EMAIL;
+    const email = typeof values.email === 'string' && values.email ? values.email : DEFAULT_LOGIN_VALUE.EMAIL;
  
     authUser(email);
     const user = userStore.getUser();

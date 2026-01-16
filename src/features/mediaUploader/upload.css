@@ -24,7 +24,6 @@
   }
 }
 
-
 .upload-view--form {
   position: absolute;
   width: 100%;
@@ -50,7 +49,7 @@
 }
 
 .upload-view--preview-image {
-   display: flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;

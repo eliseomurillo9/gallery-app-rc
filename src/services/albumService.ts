@@ -13,8 +13,7 @@ type AddPhotoToAlbumParams = {
 export const addPhotoToAlbum = (params: AddPhotoToAlbumParams) => {
   const { albumId, photo } = params;
   try {
-    const albumsJson = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
-    const albums = JSON.parse(albumsJson);
+    const albums = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
 
     const albumIndex = albums.data.findIndex(
       (album: Album) => album.id === albumId
