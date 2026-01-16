@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import loader from "../../assets/img/security GIF.gif";
-import { userStore } from "../../store/user";
 import { authUser } from "../../services/authService";
 import { DEFAULT_LOGIN_VALUE } from "../../constants/login";
 
@@ -20,20 +19,18 @@ export function SignIn() {
     e.preventDefault();
     const form = new FormData(e.currentTarget as HTMLFormElement);
     const values = Object.fromEntries(form);
-    const email = typeof values.email === 'string' && values.email ? values.email : DEFAULT_LOGIN_VALUE.EMAIL;
- 
-    authUser(email);
-    const user = userStore.getUser();
+    const email =
+      typeof values.email === "string" && values.email
+        ? values.email
+        : DEFAULT_LOGIN_VALUE.EMAIL;
+    setShowLoader(true);
 
-    if (user) {
-      setShowLoader(true);
-      setTimeout(() => {
-        navigate({ to: '/$userId', params: {userId: String(user.id)} });
-      }, 4000);
-      return;
+    const authorizedUser = await authUser(email);
+
+    if (!authorizedUser) {
+      throw new Error("Error signing in, retry sign in as guest");
     }
-
-    throw new Error("Error signing in, retry sign in as guest");
+    navigate({ to: "/$userId", params: { userId: String(authorizedUser.id) } });
   };
 
   return (
