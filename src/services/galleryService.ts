@@ -11,17 +11,19 @@ const convertToBase64 = async (file: File) => {
   });
 };
 
-export function getPhotoById(photoId: Photo["id"]): Photo {
-  console.log("Fetching photo with ID:", photoId);
-  const photos = getStorageItem(LOCAL_STORAGE_KEYS.PHOTOS);
-  const photo = photos.data.find((photo: Photo) => photoId === photo.id);
-  console.log("Fetched photo:", photo);
-  if (!photo) {
+export const getPhotoById = async (photoId: Photo["id"]): Promise<Photo> => {
+  const response = await fetch(
+    `${import.meta.env.VITE_API_BASE_URL}/photo/${photoId}`
+  );
+
+  if (!response.ok) {
     throw new Error("Error fetching photo details");
   }
 
-  return photo;
-}
+  const photos = await response.json();
+  console.log("Fetched photo:", photos);
+  return photos;
+};
 
 export function updateGallery(gallery: UserPhoto[] | Photo[]) {
   try {
@@ -35,24 +37,28 @@ export function updateGallery(gallery: UserPhoto[] | Photo[]) {
   }
 }
 
-export async function uploadPhoto(photosToUpload: File[]): Promise<UserPhoto[]> {
+export async function uploadPhoto(
+  photosToUpload: File[]
+): Promise<UserPhoto[]> {
   console.log("RUN RUN UPLOAD PHOTO");
   try {
     const user = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
     const photos = getStorageItem(LOCAL_STORAGE_KEYS.PHOTOS);
-    const imagesBuildData = Promise.all(photosToUpload.map(async (photoFile: File) => {
-      const base64Data = await convertToBase64(photoFile);
-      console.log("Base64 data:", base64Data);
-      return {
-        id: crypto.randomUUID(),
-        creationDate: new Date().toISOString(),
-        url: base64Data,
-      };
-    }));
+    const imagesBuildData = Promise.all(
+      photosToUpload.map(async (photoFile: File) => {
+        const base64Data = await convertToBase64(photoFile);
+        console.log("Base64 data:", base64Data);
+        return {
+          id: crypto.randomUUID(),
+          creationDate: new Date().toISOString(),
+          url: base64Data,
+        };
+      })
+    );
     console.log("Images build data promises:", imagesBuildData);
 
-    user.photos.push(...await imagesBuildData);
-    photos.data.push(...await imagesBuildData);
+    user.photos.push(...(await imagesBuildData));
+    photos.data.push(...(await imagesBuildData));
     console.log("Updated photos:", photos);
     updateGallery(user.photos);
     setStorageItem(LOCAL_STORAGE_KEYS.PHOTOS, photos);

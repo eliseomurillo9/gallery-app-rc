@@ -2,7 +2,7 @@ import type { Photo } from "@/types/Photo";
 import "./imageModal.css";
 import { getPhotoById } from "@services/galleryService";
 import { userStore } from "@/store/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Popover } from "@/shared/UI/Popover/Popover";
 import type { Album, UserAlbum } from "@/types/Album";
 import { addPhotoToAlbum } from "@services/albumService";
@@ -17,10 +17,19 @@ type ImageModalProps = {
 export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
   const [openMenu, setOpenMenu] = useState(false);
   const [albumsList, setAlbumsList] = useState<UserAlbum[]>();
+  const [photo, setPhoto] = useState<Photo>();
   const [modalType, setModalType] = useState<
     "addToAlbum" | "deletePhoto" | null
   >(null);
-  const photo = getPhotoById(photoId);
+
+  useEffect(() => {
+    const fetchPhoto = async () => {
+      const photo = await getPhotoById(photoId);
+      setPhoto(photo);
+    };
+
+    fetchPhoto();
+  }, [photoId]);
   const { deletePhoto } = userStore;
 
   const addPhoto = (
@@ -77,7 +86,7 @@ export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
           close={() => setOpenMenu(false)}
         >
           <div className="menu-list">
-            {albumsList ? (
+            {albumsList && photo ? (
               albumsList.map((album) => (
                 <button
                   key={album.id}
