@@ -21,13 +21,10 @@ export function Portrait({
     <Link
       to="/$userId/album/$albumId"
       params={{ userId: String(user.id), albumId: String(albumId) }}
-      search={{
-        albumId,
-      }}
       className="portrait-view"
     >
       <div className="portrait-view__img">
-        {imgHref ? (
+        {imgHref && imgHref !== ""? (
           <img
             src={imgHref}
             alt={`Portrait of ${name} album`}

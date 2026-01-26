@@ -1,11 +1,10 @@
 import type { Photo } from "@/types/Photo";
 import "./imageModal.css";
 import { getPhotoById } from "@services/galleryService";
-import { userStore } from "@/store/user";
 import { useEffect, useState } from "react";
 import { Popover } from "@/shared/UI/Popover/Popover";
 import type { Album, UserAlbum } from "@/types/Album";
-import { addPhotoToAlbum } from "@services/albumService";
+import { addPhotoToAlbum, getUserAlbums } from "@services/albumService";
 import { Icon } from "@shared/UI/Icon/Icon";
 import { t } from "i18next";
 import { Button } from "@shared/UI/Button/Button";
@@ -30,14 +29,13 @@ export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
 
     fetchPhoto();
   }, [photoId]);
-  const { deletePhoto } = userStore;
 
-  const addPhoto = (
+  const addPhoto = async (
     albumId: Album["id"],
     photoid: Photo["id"],
-    url: Photo["url"]
+    url: Photo["url"],
   ) => {
-    const addToAlbum = addPhotoToAlbum({
+    const addToAlbum = await addPhotoToAlbum({
       albumId,
       photo: { id: photoid, url },
     });
@@ -46,10 +44,10 @@ export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
       setOpenMenu(false);
     }
   };
-  const openAlbumList = () => {
+  const openAlbumList = async () => {
     setModalType("addToAlbum");
     setOpenMenu(!openMenu);
-    const getAlbumsList = userStore.getUserAlbums();
+    const getAlbumsList = await getUserAlbums();
     setAlbumsList(getAlbumsList);
   };
 
@@ -77,6 +75,7 @@ export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
     },
   ];
 
+  // TODO: Move to hook
   const renderPopover = () => {
     if (modalType === "addToAlbum") {
       return (
@@ -117,7 +116,8 @@ export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
                 placeholder="Accept"
                 variant="primary"
                 size="large"
-                action={() => deletePhoto(photoId)}
+                //TODO: crate delete action
+                action={() => console.log("coucou")}
               />
               <Button
                 placeholder="Cancel"

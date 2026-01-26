@@ -1,4 +1,3 @@
-import { updateGallery } from "@services/galleryService";
 import type { User } from "../types/User";
 class UserStore {
   private static instance: UserStore;
@@ -23,33 +22,6 @@ class UserStore {
       throw new Error("User not set");
     }
     return this.user;
-  }
-
-  public getUserPhotos() {
-    if (!this.user?.photos) {
-      return;
-    }
-
-    return this.user.photos;
-  }
-
-  public getUserAlbums() {
-    if (!this.user?.albums) {
-      return;
-    }
-
-    return this.user.albums;
-  }
-
-  public deletePhoto(photoId: number) {
-    if (!this.user?.photos) {
-      throw new Error("User photos not set");
-    }
-    const updatedPhotoList = this.user.photos.filter(
-      (photo) => photo.id !== photoId
-    );
-    updateGallery(updatedPhotoList);
-    this.user.photos = updatedPhotoList;
   }
 }
 

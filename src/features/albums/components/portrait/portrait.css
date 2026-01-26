@@ -3,9 +3,14 @@
   margin: auto;
 }
 .portrait-view__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary-a20);
   width: 12rem;
   height: 100%;
   border-radius: 1rem;
+
 
   img {
     width: 100%;

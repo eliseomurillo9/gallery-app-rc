@@ -2,6 +2,7 @@ import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import type { Photo, UserPhoto } from "@/types/Photo";
 import { getStorageItem, setStorageItem } from "./storageService";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const convertToBase64 = async (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -11,6 +12,15 @@ const convertToBase64 = async (file: File) => {
   });
 };
 
+export const getPhotos = async (): Promise<Photo[]> => {
+  const response = await fetch(`${BASE_URL}/photo`);
+  
+  if (!response.ok) {
+    console.error("Failed to fetch photos");
+  }
+  const photos = await response.json();
+  return photos;
+}
 export const getPhotoById = async (photoId: Photo["id"]): Promise<Photo> => {
   const response = await fetch(
     `${import.meta.env.VITE_API_BASE_URL}/photo/${photoId}`

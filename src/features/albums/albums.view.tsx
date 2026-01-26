@@ -8,8 +8,12 @@ export function AlbumsView() {
   const [albums, setAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
-    const userAlbums = getUserAlbums();
-    setAlbums(userAlbums);
+    const userAlbums = async () => {
+      const albums = await getUserAlbums();
+      setAlbums(albums);
+    };
+
+    userAlbums()
   }, []);
   return (
     <div className="album-view">
