@@ -2,8 +2,9 @@ import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import { userStore } from "../store/user";
 import type { User } from "../types/User";
 import { getStorageItem, setStorageItem } from "./storageService";
+import { ENV } from "@/config/env";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = ENV.BASE_URL;
 
 export async function authUser(userEmail: User["email"]) {
   try {

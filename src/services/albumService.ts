@@ -1,3 +1,4 @@
+import { ENV } from "@/config/env";
 import type { Album } from "@/types/Album";
 import type { Photo } from "@/types/Photo";
 
@@ -9,7 +10,7 @@ type AddPhotoToAlbumParams = {
   };
 };
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = ENV.BASE_URL;
 
 export const addPhotoToAlbum = async (params: AddPhotoToAlbumParams) => {
   const { albumId, photo } = params;
