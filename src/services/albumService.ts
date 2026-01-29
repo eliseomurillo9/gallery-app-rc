@@ -1,7 +1,5 @@
-import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import type { Album } from "@/types/Album";
 import type { Photo } from "@/types/Photo";
-import { getStorageItem } from "./storageService";
 
 type AddPhotoToAlbumParams = {
   albumId: Album["id"];
@@ -27,7 +25,6 @@ export const addPhotoToAlbum = async (params: AddPhotoToAlbumParams) => {
     console.error("Failed to add photo to album");
     return false;
   }
-
   console.info("Photo added to album successfully");
 };
 
@@ -41,19 +38,12 @@ export const getUserAlbums = async () => {
   return albumsData;
 };
 
-export const getAlbumById = (albumId: Album["id"]) => {
-  try {
-    const albums = getStorageItem(LOCAL_STORAGE_KEYS.ALBUMS);
+export const getAlbumById = async (albumId: Album["id"]): Promise<Album> => {
+  const albumPhotos = await fetch(`${BASE_URL}/albums/${albumId}`);
 
-    const album = albums.data.find((album: Album) => album.id === albumId);
-
-    if (!album) {
-      throw new Error("Album not found");
-    }
-
-    return album.photos;
-  } catch (error: unknown) {
-    console.error(error);
+  if (!albumPhotos.ok) {
+    console.error("Failed to fetch album photos");
   }
-  return [];
+  const albumPhotosData = await albumPhotos.json();
+  return albumPhotosData;
 };

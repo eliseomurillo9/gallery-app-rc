@@ -36,5 +36,6 @@ export function hydrateUser() {
   const user = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
 
   // If user exists in local storage, update the user store
+  console.log("Hydrating user from local storage:", user);
   userStore.setUser(user); // this avoids two requests in the UI component
 }

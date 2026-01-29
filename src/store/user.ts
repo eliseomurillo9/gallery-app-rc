@@ -17,10 +17,10 @@ class UserStore {
   }
 
   public getUser(): User {
-    console.log("Getting user:", this.user);
     if (!this.user) {
       throw new Error("User not set");
     }
+    console.log("Getting user:", this.user);
     return this.user;
   }
 }

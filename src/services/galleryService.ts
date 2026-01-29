@@ -1,6 +1,7 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
 import type { Photo, UserPhoto } from "@/types/Photo";
 import { getStorageItem, setStorageItem } from "./storageService";
+import type { User } from "@/types/User";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const convertToBase64 = async (file: File) => {
@@ -12,18 +13,18 @@ const convertToBase64 = async (file: File) => {
   });
 };
 
-export const getPhotos = async (): Promise<Photo[]> => {
-  const response = await fetch(`${BASE_URL}/photo`);
-  
+export const getPhotos = async (userId: User["id"]): Promise<Photo[]> => {
+  const response = await fetch(`${BASE_URL}/user/${userId}/photo`);
+
   if (!response.ok) {
     console.error("Failed to fetch photos");
   }
   const photos = await response.json();
   return photos;
-}
+};
 export const getPhotoById = async (photoId: Photo["id"]): Promise<Photo> => {
   const response = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/photo/${photoId}`
+    `${import.meta.env.VITE_API_BASE_URL}/photo/${photoId}`,
   );
 
   if (!response.ok) {
@@ -48,7 +49,7 @@ export function updateGallery(gallery: UserPhoto[] | Photo[]) {
 }
 
 export async function uploadPhoto(
-  photosToUpload: File[]
+  photosToUpload: File[],
 ): Promise<UserPhoto[]> {
   console.log("RUN RUN UPLOAD PHOTO");
   try {
@@ -63,7 +64,7 @@ export async function uploadPhoto(
           creationDate: new Date().toISOString(),
           url: base64Data,
         };
-      })
+      }),
     );
     console.log("Images build data promises:", imagesBuildData);
 
