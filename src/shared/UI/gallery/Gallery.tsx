@@ -6,22 +6,21 @@ import { useState } from "react";
 import type { Photo, UserPhoto } from "@/types/Photo"
 
 interface GalleryProps {
-  caller?: string;
   photos: UserPhoto[];
 }
 
-export function Gallery({ caller, photos }: Readonly<GalleryProps>) {
-  console.log('------', caller)
+export function Gallery({ photos }: Readonly<GalleryProps>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState({ id: 0 });
-  function handleClick(open: boolean, photo?: Photo["id"]) {
-    if (photo) {
-      setImage({ id: photo });
-      setIsOpen(open);
+  const [photoId, setPhotoId] = useState<number|null>(null);
+  function handleClick(photoIdentifier?: Photo["id"]) {
+    if (photoIdentifier && !isOpen) {
+      setPhotoId(photoIdentifier);
+      setIsOpen(true);
       return;
     }
 
     setIsOpen(false);
+    setPhotoId(null);
   }
 
   return (
@@ -33,7 +32,7 @@ export function Gallery({ caller, photos }: Readonly<GalleryProps>) {
               {ImgElement({
                 ImgSrc: photo.url,
                 altText: "Image from user album",
-                action: () => handleClick(true, photo.id),
+                action: () => handleClick(photo.id),
               })}
             </Fragment>
           );
@@ -41,8 +40,8 @@ export function Gallery({ caller, photos }: Readonly<GalleryProps>) {
       ) : (
         <pre>No photos</pre>
       )}
-      {!!(image.id) && (
-        <ImageModal isOpen={isOpen} toggleModal={setIsOpen} photoId={image.id} />
+      {!!(photoId) && (
+        <ImageModal isOpen={isOpen} toggleModal={() => handleClick()} photoId={photoId} />
       )}
     </div>
   );

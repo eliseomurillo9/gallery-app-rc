@@ -20,9 +20,8 @@ export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promi
   if (!response.ok) {
     console.error("Failed to fetch photos");
   }
-  const photos = await response.json();
 
-  return photos;
+  return await response.json();
 };
 
 export const getPhotoById = async (photoId: Photo["id"]): Promise<Photo> => {

@@ -17,6 +17,11 @@ export function GalleryView() {
 
     getUserPhotos().then(userPhotos => {
       setPhotos(userPhotos);
+    }).catch((e: Error) => {
+      if (e.name === "AbortError") {
+        return;
+      }
+      console.error("Im an error", e.message);
     });
 
     return () => controller.abort();
@@ -24,5 +29,5 @@ export function GalleryView() {
 
   //if(isLoading) return null
   // TODO: Check why gallery is called twice.
-  return photos && photos.length !== 0 && <Gallery caller="MAIN GALLERY" photos={photos} />;
+  return photos && photos.length !== 0 && <Gallery photos={photos} />;
 }
