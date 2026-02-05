@@ -6,11 +6,12 @@ import { useState } from "react";
 import type { Photo, UserPhoto } from "@/types/Photo"
 
 interface GalleryProps {
+  caller?: string;
   photos: UserPhoto[];
 }
 
-export function Gallery({ photos }: Readonly<GalleryProps>) {
-  console.log(photos)
+export function Gallery({ caller, photos }: Readonly<GalleryProps>) {
+  console.log('------', caller)
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState({ id: 0 });
   function handleClick(open: boolean, photo?: Photo["id"]) {

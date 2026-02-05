@@ -24,7 +24,7 @@ export function AlbumGalleryView() {
         <Button icon="back" href={`/${userId}/profile/albums`} />
         <h2>{album?.title}</h2>
       </div>
-      <Gallery photos={album?.photos ?? []} />
+      <Gallery caller="ALBUM" photos={album?.photos ?? []} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { userStore } from "@/store/user";
 import { uploadPhoto } from "@services/galleryService";
 import { t } from "i18next";
 import { useState } from "react";
@@ -25,13 +26,13 @@ export const usePhotoUpload = () => {
       }
 
       const validPhotos = files.filter(
-        (file) => isImageSizeValid(file) === false
+        (file) => isImageSizeValid(file) === false,
       );
       if (validPhotos.length < files.length) {
         alert(t("uploadView.sizeAlert", { size: MAX_IMAGE_SIZE_MB }));
       }
 
-      await uploadPhoto(validPhotos);
+      await uploadPhoto(userStore.getUser().id, validPhotos);
 
       setImagesList(validPhotos);
     } catch (error) {
