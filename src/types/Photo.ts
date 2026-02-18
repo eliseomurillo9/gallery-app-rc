@@ -13,7 +13,8 @@ type Metadata = {
   lens: string;
 };
 
-export type UserPhoto = {
+export type AlbumPhoto = {
   id: number;
   url: string;
+  albumId: number;
 };

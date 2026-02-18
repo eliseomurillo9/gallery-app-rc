@@ -1,33 +1,9 @@
-import { userStore } from "@/store/user";
-import type { UserPhoto } from "@/types/Photo";
-import { getPhotos } from "@services/galleryService";
 import { Gallery } from "@shared/UI/Gallery/Gallery";
-import { useEffect, useState} from "react";
+import { useGalleryStore } from "@/store/hooks/useUserStore.ts";
 
 export function GalleryView() {
-  const [photos, setPhotos] = useState<UserPhoto[]>([]);
-  //const [isLoading, setIsLoading] = useState<boolean>(true);
+  const photos = useGalleryStore();
+  if (!photos) return null; // or a loading UI
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const getUserPhotos = async () => {
-      const userId = Number(userStore.getUser().id);
-      return await getPhotos(userId, controller.signal);
-    };
-
-    getUserPhotos().then(userPhotos => {
-      setPhotos(userPhotos);
-    }).catch((e: Error) => {
-      if (e.name === "AbortError") {
-        return;
-      }
-      console.error("Im an error", e.message);
-    });
-
-    return () => controller.abort();
-  }, []);
-
-  //if(isLoading) return null
-  // TODO: Check why gallery is called twice.
   return photos && photos.length !== 0 && <Gallery photos={photos} />;
 }

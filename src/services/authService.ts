@@ -1,7 +1,6 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
-import { userStore } from "../store/user";
 import type { User } from "../types/User";
-import { getStorageItem, setStorageItem } from "./storageService";
+import { getStorageItem } from "./storageService";
 import { ENV } from "@/config/env";
 
 const BASE_URL = ENV.BASE_URL;
@@ -18,10 +17,7 @@ export async function authUser(userEmail: User["email"]) {
     if (!user) {
       throw new Error("User not found, try continue as guest");
     }
-
-    userStore.setUser(user);
-    setStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER, user);
-
+    globalThis.localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_USER, JSON.stringify({'id': user.id, 'name': user.name, 'email': user.email, 'avatar': user.avatar}));
     return user;
   } catch (error: unknown) {
     console.log(error);
@@ -33,10 +29,4 @@ export function isUserAuthenticated(): boolean {
   return !!user;
 }
 
-export function hydrateUser() {
-  const user = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
-
-  // If user exists in local storage, update the user store
-  console.log("Hydrating user from local storage:", user);
-  userStore.setUser(user); // this avoids two requests in the UI component
-}
+export const getLocalUserInfo = () =>  getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);

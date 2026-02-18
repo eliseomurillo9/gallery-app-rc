@@ -1,8 +1,8 @@
 import type { LocalStorageKeys } from "@/constants/storage";
-import type { Photo, UserPhoto } from "@/types/Photo";
+import type { Photo } from "@/types/Photo";
 import type { User } from "@/types/User";
 
-type StorageValue = Photo | Photo[] | User | UserPhoto[] | UserPhoto ;
+type StorageValue = Photo | Photo[] | User;
 export const getStorageItem = (key: LocalStorageKeys) => {
   const item = globalThis.localStorage.getItem(key);
 

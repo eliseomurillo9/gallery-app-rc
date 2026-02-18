@@ -1,8 +1,8 @@
 import { GalleryView } from '@features/gallery/gallery.view';
-import { getPhotos } from '@services/galleryService';
 import { createFileRoute } from '@tanstack/react-router'
+import {galleryStore} from "@/store/gallery.ts";
 
 export const Route = createFileRoute("/$userId/")({
-  loader: async () => await getPhotos(),
+  loader: async ({params}) => await galleryStore.fetchGallery(Number(params.userId)),
   component: GalleryView,
 });

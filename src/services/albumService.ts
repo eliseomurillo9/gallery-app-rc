@@ -1,6 +1,6 @@
-import { ENV } from "@/config/env";
-import type { Album } from "@/types/Album";
-import type { Photo } from "@/types/Photo";
+import {ENV} from "@/config/env";
+import type {Album} from "@/types/Album";
+import type {Photo} from "@/types/Photo";
 
 type AddPhotoToAlbumParams = {
   albumId: Album["id"];
@@ -35,8 +35,7 @@ export const getUserAlbums = async () => {
   if (!albums.ok) {
     console.error("Failed to fetch albums");
   }
-  const albumsData = await albums.json();
-  return albumsData;
+  return await albums.json();
 };
 
 export const getAlbumById = async (albumId: Album["id"]): Promise<Album> => {
@@ -45,6 +44,5 @@ export const getAlbumById = async (albumId: Album["id"]): Promise<Album> => {
   if (!albumPhotos.ok) {
     console.error("Failed to fetch album photos");
   }
-  const albumPhotosData = await albumPhotos.json();
-  return albumPhotosData;
+  return await albumPhotos.json();
 };

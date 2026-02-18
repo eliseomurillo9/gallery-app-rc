@@ -3,10 +3,10 @@ import { Fragment } from "react/jsx-runtime";
 import "./Gallery.css";
 import { ImageModal } from "./components/imageModal/ImageModal";
 import { useState } from "react";
-import type { Photo, UserPhoto } from "@/types/Photo"
+import type {AlbumPhoto, Photo} from "@/types/Photo"
 
 interface GalleryProps {
-  photos: UserPhoto[];
+  photos: Photo[] | AlbumPhoto[];
 }
 
 export function Gallery({ photos }: Readonly<GalleryProps>) {
@@ -26,7 +26,7 @@ export function Gallery({ photos }: Readonly<GalleryProps>) {
   return (
     <div className="gallery">
       {photos  && photos.length !== 0 ? (
-        photos.map((photo: UserPhoto) => {
+        photos.map((photo: Photo | AlbumPhoto) => {
           return (
             <Fragment key={photo.id}>
               {ImgElement({

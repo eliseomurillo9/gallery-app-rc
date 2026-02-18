@@ -1,7 +1,9 @@
 import type { User } from "../types/User";
+import {getLocalUserInfo} from "@services/authService.ts";
 class UserStore {
   private static instance: UserStore;
-  private user: User | null = null;
+  private user: User = {} as User;
+  private readonly listeners: Set<() => void> = new Set();
 
   private constructor() {}
 
@@ -12,17 +14,31 @@ class UserStore {
     return UserStore.instance;
   }
   public setUser(userInfo: User): void {
-    console.log("Setting user:", userInfo);
     this.user = userInfo;
+    console.log("Setting user:", userInfo);
+    this.listeners.forEach((listener) => listener());
   }
 
-  public getUser(): User {
-    if (!this.user) {
-      throw new Error("User not set");
-    }
-    console.log("Getting user:", this.user);
+  public getUser() {
     return this.user;
   }
+
+  public loadUser(): void {
+    try {
+      this.user = getLocalUserInfo() ?? {};
+    } catch (error) {
+        console.error("Error loading user:", error);
+    }
+  }
+
+  public isUserAuthenticated(): boolean {
+    return !!Object.keys(this.user).length
+  }
+
+  subscribe = (listener: () => void) => {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  };
 }
 
 export const userStore = UserStore.getUserInstance();

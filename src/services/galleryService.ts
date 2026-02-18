@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_KEYS } from "@/constants/storage";
-import type { Photo, UserPhoto } from "@/types/Photo";
+import type { Photo} from "@/types/Photo";
 import { getStorageItem } from "./storageService";
 import type { User } from "@/types/User";
 import { ENV } from "@/config/env";
@@ -14,7 +14,7 @@ const convertToBase64 = async (file: File): Promise<string> => {
   });
 };
 
-export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promise<UserPhoto[]> => {
+export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promise<Photo[]> => {
   const response = await fetch(`${BASE_URL}/user/${userId}/photo`, {signal});
 
   if (!response.ok) {
@@ -60,8 +60,7 @@ export const updateGallery = async (
 export async function uploadPhoto(
   id: User["id"],
   photosToUpload: File[],
-): Promise<UserPhoto[]> {
-  console.log("RUN RUN UPLOAD PHOTO");
+): Promise<Photo[]> {
   try {
     const user = getStorageItem(LOCAL_STORAGE_KEYS.LOGGED_USER);
 
@@ -79,11 +78,42 @@ export async function uploadPhoto(
 
     user.photos.push(...(await imagesBuildData));
     console.log("Updated photos:", user.photos);
-    updateGallery(id, await imagesBuildData);
+    await updateGallery(id, await imagesBuildData);
 
     return user.photos;
   } catch (error: unknown) {
     console.error("Error uploading photo:", error);
     return [];
   }
+}
+
+export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]): Promise<{success: boolean, data: Photo[], error: string | null}> => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/${userId}/photo/${photoId}`, {
+      method: "DELETE",
+    });
+
+    const userResponse = await response.json();
+    if (response.ok) {
+      console.log("User deleted successfully", userResponse);
+      return { success: true, data:userResponse.photos, error: null};
+    }
+    return {success: false, data: [], error: "Failed to delete photo"};
+  } catch (error: unknown) {
+    console.error("Error deleting photo:", error);
+    return {success: false, data: [], error: "Error deleting photo"};
+  }
+
+}
+
+// TODO: add pagination and {success: boolean, data: Photo[], error: string | null} structure to all gallery service methods
+export const getGalleryByUserId = async (userId: User["id"]) => {
+
+        const response = await fetch(`${BASE_URL}/user/${userId}/photo`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch gallery");
+        }
+        return await response.json();
+
+
 }
