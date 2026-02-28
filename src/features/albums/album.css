@@ -4,8 +4,3 @@
   gap: 1rem;
   margin: auto;
 }
-
-
-.album-view > *:only-child {
-  background-color: blue;
-}

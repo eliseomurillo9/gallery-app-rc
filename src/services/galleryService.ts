@@ -3,9 +3,11 @@ import type { Photo} from "@/types/Photo";
 import { getStorageItem } from "./storageService";
 import type { User } from "@/types/User";
 import { ENV } from "@/config/env";
+import type {Result} from "@services/types/Result.ts";
 
 const BASE_URL = ENV.BASE_URL;
-const convertToBase64 = async (file: File): Promise<string> => {
+
+const convertToBase64 = async (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -14,26 +16,30 @@ const convertToBase64 = async (file: File): Promise<string> => {
   });
 };
 
-export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promise<Photo[]> => {
-  const response = await fetch(`${BASE_URL}/user/${userId}/photo`, {signal});
+export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promise<Result<Photo[]>> => {
+ try {
+   const response = await fetch(`${BASE_URL}/user/${userId}/photo`, {signal});
 
-  if (!response.ok) {
-    console.error("Failed to fetch photos");
-  }
+   if (!response.ok) {
+     return { success: false, data: [], error: "Failed to fetch photos" };
+   }
 
-  return await response.json();
+   return {success: true, data: await response.json(), error: null};
+ } catch (error) {
+    console.error("Error retrieving photo", error);
+    return { success: false, data: [], error: "Unexpected error fetching photos" };
+ }
 };
 
-export const getPhotoById = async (photoId: Photo["id"]): Promise<Photo> => {
+export const getPhotoById = async (photoId: Photo["id"]): Promise<Result<Photo>> => {
   const response = await fetch(`${BASE_URL}/photo/${photoId}`);
 
   if (!response.ok) {
-    throw new Error("Error fetching photo details");
+    return { success: false, data: null, error: "Failed to fetch photo" };
   }
 
   const photos = await response.json();
-  console.log("Fetched photo:", photos);
-  return photos;
+  return { success: true, data: photos, error: null };
 };
 
 export const updateGallery = async (
@@ -87,7 +93,7 @@ export async function uploadPhoto(
   }
 }
 
-export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]): Promise<{success: boolean, data: Photo[], error: string | null}> => {
+export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]): Promise<Result<Photo[]>> => {
   try {
     const response = await fetch(`${BASE_URL}/user/${userId}/photo/${photoId}`, {
       method: "DELETE",
@@ -96,7 +102,7 @@ export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]):
     const userResponse = await response.json();
     if (response.ok) {
       console.log("User deleted successfully", userResponse);
-      return { success: true, data:userResponse.photos, error: null};
+      return {success: true, data: userResponse.photos, error: null};
     }
     return {success: false, data: [], error: "Failed to delete photo"};
   } catch (error: unknown) {
@@ -107,13 +113,17 @@ export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]):
 }
 
 // TODO: add pagination and {success: boolean, data: Photo[], error: string | null} structure to all gallery service methods
-export const getGalleryByUserId = async (userId: User["id"]) => {
+export const getGalleryByUserId = async (userId: User["id"]): Promise<Result<Photo[]>> => {
 
-        const response = await fetch(`${BASE_URL}/user/${userId}/photo`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch gallery");
-        }
-        return await response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/user/${userId}/photo`);
+    if (!response.ok) {
+      return {success: false, data: [], error: "Failed to fetch gallery"};
+    }
 
-
+    return {success: true, data: await response.json(), error: null};
+  } catch (error) {
+    console.error("Error deleting photo:", error);
+    return {success: false, data: [], error: "Unexpected error fetching photo"};
+  }
 }

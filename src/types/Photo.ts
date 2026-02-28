@@ -13,8 +13,4 @@ type Metadata = {
   lens: string;
 };
 
-export type AlbumPhoto = {
-  id: number;
-  url: string;
-  albumId: number;
-};
+export type AlbumPhoto = Pick<Photo, "id" | "url">;

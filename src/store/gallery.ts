@@ -1,6 +1,7 @@
 import type {Photo} from "@/types/Photo";
 import {deleteUserPhoto, getGalleryByUserId} from "@services/galleryService.ts";
 import type {User} from "@/types/User.ts";
+import {deletePhotoFromAlbum, getUserAlbums} from "@services/albumService.ts";
 
 class GaleryStore {
   private static instance: GaleryStore;
@@ -22,11 +23,11 @@ class GaleryStore {
   }
 
   public async fetchGallery(userId: User['id']): Promise<void> {
-    try {
-      this.gallery = await getGalleryByUserId(userId);
-    } catch (error) {
-      console.error("Error fetching gallery:", error);
-    }
+      const {success, data, error} = await getGalleryByUserId(userId);
+      if (!success) {
+            console.error('Failed to fetch gallery:', error);
+      }
+      this.gallery = data ?? [];
 
   }
 
@@ -37,7 +38,31 @@ class GaleryStore {
       return false;
     }
 
-    this.gallery = await getGalleryByUserId(userId)
+    const albums = await getUserAlbums(userId);
+
+    if (!albums) {
+        console.error('Failed to fetch gallery after deletion');
+    }
+
+    const matchedAlbums = albums.filter(album => album.photos.some(photo => photo.id === photoId));
+
+    const deletePhoto = matchedAlbums.map(async (album) => {
+      const  response = await deletePhotoFromAlbum(userId, album, photoId);
+        if (!response.success) {
+            console.error('Failed to delete photo from album:', response.error);
+        }
+
+        return {albumId: album.id, response};
+    })
+
+
+    Promise.all(deletePhoto).then(result => {
+      const failDelete = result.filter(({ response }) => !response.success)
+      failDelete.forEach(({albumId, response}) => {console.error(`error deleting photo from album ${albumId}`, response.error)});
+    });
+
+    const updatedGallery =  await getGalleryByUserId(userId)
+    this.gallery = updatedGallery.data ?? [];
     this.notify();
     return true;
   }

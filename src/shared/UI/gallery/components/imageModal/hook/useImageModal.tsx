@@ -1,20 +1,39 @@
 import {Popover} from "@shared/UI/Popover/Popover.tsx";
 import {t} from "i18next";
 import {Button} from "@shared/UI/Button/Button.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import type {Album, UserAlbum} from "@/types/Album.ts";
 import type {Photo} from "@/types/Photo.ts";
 import {addPhotoToAlbum, getUserAlbums} from "@services/albumService.ts";
-import {galleryStore} from "@/store/gallery.ts";
 import {userStore} from "@/store/user.ts";
+import {getPhotoById} from "@services/galleryService.ts";
 
-export const useImageModal = (toggleModal: () => void) => {
+type useImageModalProps = {
+    toggleModal: () => void;
+    photoId: Photo['id'];
+    onDelete: (photoId: Photo['id']) => Promise<boolean>
+}
+export const useImageModal = (props: useImageModalProps) => {
+    const {toggleModal, photoId, onDelete} = props;
     const [modalType, setModalType] = useState<
         "addToAlbum" | "deletePhoto" | null
     >(null);
     const [openMenu, setOpenMenu] = useState(false);
     const [albumsList, setAlbumsList] = useState<UserAlbum[]>();
     const [photo, setPhoto] = useState<Photo | null>(null);
+
+    useEffect(() => {
+        const fetchPhoto = async () => {
+            const {success, data, error} = await getPhotoById(photoId);
+            console.log(success);
+            if (!success) {
+                console.error('Photo not found for id:', error);
+            }
+            setPhoto(data);
+        };
+
+        fetchPhoto();
+    }, [photoId, setPhoto]);
 
     const addPhotoAlbum = async (
         albumId: Album["id"],
@@ -74,7 +93,6 @@ export const useImageModal = (toggleModal: () => void) => {
                                 placeholder="Accept"
                                 variant="primary"
                                 size="large"
-                                //TODO: crate delete action
                                 action={() => deletePhoto(photo?.id)}
                             />
                             <Button
@@ -95,7 +113,7 @@ export const useImageModal = (toggleModal: () => void) => {
     const openAlbumList = async () => {
         setModalType("addToAlbum");
         setOpenMenu(!openMenu);
-        const getAlbumsList = await getUserAlbums();
+        const getAlbumsList = await getUserAlbums(userStore.getUser().id);
         setAlbumsList(getAlbumsList);
     };
 
@@ -123,14 +141,13 @@ export const useImageModal = (toggleModal: () => void) => {
         },
     ];
 
-    const deletePhoto = async  (photoId: Photo['id']) => {
-
-        const deleteRequest = await galleryStore.deletePhoto(userStore.getUser().id, photoId);
-
-        if (deleteRequest) {
+    const deletePhoto = async (photoId: Photo['id']) => {
+        const deleteRequest = await onDelete(photoId);
+        if (!deleteRequest) {
+          return;
+        }
             setOpenMenu(false);
             toggleModal();
-        }
     }
 
     return {renderPopover, TOOLBAR, photo, setPhoto, deletePhoto}

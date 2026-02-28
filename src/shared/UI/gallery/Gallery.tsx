@@ -7,9 +7,10 @@ import type {AlbumPhoto, Photo} from "@/types/Photo"
 
 interface GalleryProps {
   photos: Photo[] | AlbumPhoto[];
+  onPhotoDelete: (photoId: Photo['id']) => Promise<boolean>
 }
 
-export function Gallery({ photos }: Readonly<GalleryProps>) {
+export function Gallery({ photos, onPhotoDelete}: Readonly<GalleryProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const [photoId, setPhotoId] = useState<number|null>(null);
   function handleClick(photoIdentifier?: Photo["id"]) {
@@ -41,7 +42,7 @@ export function Gallery({ photos }: Readonly<GalleryProps>) {
         <pre>No photos</pre>
       )}
       {!!(photoId) && (
-        <ImageModal isOpen={isOpen} toggleModal={() => handleClick()} photoId={photoId} />
+        <ImageModal isOpen={isOpen} toggleModal={() => handleClick()} photoId={photoId} onDelete={onPhotoDelete}  />
       )}
     </div>
   );

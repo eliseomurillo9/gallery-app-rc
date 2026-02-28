@@ -1,7 +1,5 @@
 import type { Photo } from "@/types/Photo";
 import "./imageModal.css";
-import { getPhotoById } from "@services/galleryService";
-import { useEffect } from "react";
 import { Icon } from "@shared/UI/Icon/Icon";
 import {useImageModal} from "@shared/UI/Gallery/components/imageModal/hook/useImageModal.tsx";
 
@@ -9,23 +7,11 @@ type ImageModalProps = {
   isOpen: boolean;
   toggleModal: () => void;
   photoId: Photo["id"];
+  onDelete: (photoId: Photo['id']) => Promise<boolean>
 };
-export function ImageModal({ isOpen, toggleModal, photoId }: ImageModalProps) {
-  const { renderPopover, TOOLBAR, photo, setPhoto } = useImageModal(toggleModal);
-
-  useEffect(() => {
-    const fetchPhoto = async () => {
-      return await getPhotoById(photoId);
-    };
-
-    fetchPhoto().then(photoInfo => {
-        setPhoto(photoInfo);
-    })
-        .catch((e: Error) => {
-            console.error("Error fetching photo details:", e.message);
-        });
-  }, [photoId, setPhoto]);
-
+export function ImageModal(props: ImageModalProps) {
+  const { isOpen, toggleModal, photoId, onDelete } = props;
+  const { renderPopover, TOOLBAR, photo } = useImageModal({toggleModal, photoId, onDelete});
 
   return (
     isOpen && (
