@@ -10,8 +10,13 @@ export function AlbumsView() {
 
   useEffect(() => {
     const userAlbums = async () => {
-      const albums = await getUserAlbums(userStore.getUser().id);
-      setAlbums(albums);
+      const {success, error, data } = await getUserAlbums(userStore.getUser().id);
+
+      if (!success) {
+        console.error("Failed to fetch albums", error);
+        return;
+      }
+      setAlbums(data ?? []);
     };
 
     userAlbums()

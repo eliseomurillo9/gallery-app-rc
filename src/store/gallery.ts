@@ -38,16 +38,17 @@ class GaleryStore {
       return false;
     }
 
-    const albums = await getUserAlbums(userId);
+    const {success, data, error} = await getUserAlbums(userId);
 
-    if (!albums) {
-        console.error('Failed to fetch gallery after deletion');
+    if (!success) {
+        console.error('Failed to fetch gallery after deletion', error);
+        return false;
     }
 
-    const matchedAlbums = albums.filter(album => album.photos.some(photo => photo.id === photoId));
+    const matchedAlbums = (data ?? []).filter(album => album.photos.some(photo => photo.id === photoId));
 
-    const deletePhoto = matchedAlbums.map(async (album) => {
-      const  response = await deletePhotoFromAlbum(userId, album, photoId);
+    const deletePhotoPromises = matchedAlbums.map(async (album) => {
+      const response = await deletePhotoFromAlbum(userId, album, photoId);
         if (!response.success) {
             console.error('Failed to delete photo from album:', response.error);
         }
@@ -56,7 +57,7 @@ class GaleryStore {
     })
 
 
-    Promise.all(deletePhoto).then(result => {
+    await Promise.all(deletePhotoPromises).then(result => {
       const failDelete = result.filter(({ response }) => !response.success)
       failDelete.forEach(({albumId, response}) => {console.error(`error deleting photo from album ${albumId}`, response.error)});
     });

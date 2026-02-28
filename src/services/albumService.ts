@@ -41,13 +41,14 @@ export const addPhotoToAlbum = async (params: AddPhotoToAlbumParams) => {
   console.info("Photo added to album successfully");
 };
 
-export const getUserAlbums = async (userId: User['id']): Promise<Album[]> => {
+export const getUserAlbums = async (userId: User['id']): Promise<Result<Album[]>> => {
   const albums = await fetch(`${BASE_URL}/user/${userId}/albums`);
 
   if (!albums.ok) {
     console.error("Failed to fetch albums");
+    return { success: false, data: null, error: "Failed to fetch albums" };
   }
-  return await albums.json();
+  return { success: true, data: await albums.json(), error: null };
 };
 
 export const getAlbumById = async (albumId: Album["id"]): Promise<Album> => {
