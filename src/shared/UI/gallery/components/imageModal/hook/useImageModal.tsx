@@ -2,7 +2,7 @@ import {Popover} from "@shared/UI/Popover/Popover.tsx";
 import {t} from "i18next";
 import {Button} from "@shared/UI/Button/Button.tsx";
 import {useEffect, useState} from "react";
-import type {Album, UserAlbum} from "@/types/Album.ts";
+import type {Album} from "@/types/Album.ts";
 import type {Photo} from "@/types/Photo.ts";
 import {addPhotoToAlbum, getUserAlbums} from "@services/albumService.ts";
 import {userStore} from "@/store/user.ts";
@@ -19,7 +19,7 @@ export const useImageModal = (props: useImageModalProps) => {
         "addToAlbum" | "deletePhoto" | null
     >(null);
     const [openMenu, setOpenMenu] = useState(false);
-    const [albumsList, setAlbumsList] = useState<UserAlbum[]>();
+    const [albumsList, setAlbumsList] = useState<Album[]>();
     const [photo, setPhoto] = useState<Photo | null>(null);
 
     useEffect(() => {
@@ -113,8 +113,13 @@ export const useImageModal = (props: useImageModalProps) => {
     const openAlbumList = async () => {
         setModalType("addToAlbum");
         setOpenMenu(!openMenu);
-        const getAlbumsList = await getUserAlbums(userStore.getUser().id);
-        setAlbumsList(getAlbumsList);
+        const {success, data, error} = await getUserAlbums(userStore.getUser().id);
+
+        if (!success && !data) {
+            console.error("Failed to fetch albums", error);
+            return;
+        }
+        setAlbumsList(data ?? []);
     };
 
     const TOOLBAR = [
