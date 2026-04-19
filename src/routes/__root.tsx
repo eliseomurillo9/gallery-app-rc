@@ -7,7 +7,6 @@ export const Route = createRootRoute({
   ) => {
     const user = userStore
     user.loadUser();
-    const pathRegex = new RegExp(/\/\d+/gm);
     if (!user.isUserAuthenticated()) {
       console.error("User NOT authenticated");
       throw redirect({
@@ -16,8 +15,6 @@ export const Route = createRootRoute({
           redirect: location.href,
         },
       });
-    } else if (!pathRegex.test(location.pathname)) {
-      throw redirect({to: user.getUser().id.toString()})
     }
   },
   component: App,
