@@ -1,5 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
-import { Button } from "../../shared/UI/Button/Button";
+import { Button } from "@shared/UI/Button/Button.tsx";
 import { Avatar } from "./components/Avatar";
 import { Tabs } from "./components/tabs/Tabs";
 import "./profile.css";
@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { userStore } from "@/store/user";
 export function ProfileView() {
   const user = userStore.getUser();
-  const userId = user.id.toString();
   const { t } = useTranslation();
   return (
     <section className="profile-view">
@@ -28,15 +27,15 @@ export function ProfileView() {
           tabs={[
             {
               name: "gallery",
-              link: { path: `/$userId/profile/gallery`, id: userId },
+              path: '/profile/gallery',
             },
             {
               name: "album",
-              link: { path: `/$userId/profile/albums`, id: userId },
+              path: '/profile/albums'
             },
             {
               name: "settings",
-              link: { path: `/$userId/profile/settings`, id: userId },
+              path: '/profile/settings'
             },
           ]}
         />
