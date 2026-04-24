@@ -22,8 +22,9 @@
 }
 
 .modal-image {
-  max-width: 100%;
-  height: auto;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
 .modal-container {
