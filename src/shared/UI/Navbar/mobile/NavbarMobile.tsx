@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 export function NavbarMobile() {
     const {t} = useTranslation();
     return (
-        <nav className="navbar-mobile ">
+        <nav className="navbar-mobile">
             <ul className="navbar-mobile--ul">
                 <li>
                     <Link to="/">

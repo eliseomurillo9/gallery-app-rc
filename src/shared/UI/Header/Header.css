@@ -16,3 +16,9 @@
     width: auto;
   }
 }
+
+@media screen and (min-width: 1025px) {
+  .header{
+    display: none;
+  }
+}
