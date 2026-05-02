@@ -1,22 +1,35 @@
 import './sideBar.css'
 import {Link} from "@tanstack/react-router";
 import {Icon} from "@shared/UI/Icon/Icon.tsx";
+import type {Icon as IconType} from "@shared/UI/Icon/icons"
 import {userStore} from "@/store/user.ts";
 import vaultoriaIsotype from "@/assets/logo/logo-horizontal.png";
 
-const NAV_LINKS = [
+const NAV_LINKS: { id: string, icon: IconType; name: string; route: string }[] = [
     {
+        id: "GALLERY_NAV",
         icon: "gallery",
         name: "Gallery",
+        route: '/'
     },
     {
-        icon: "user",
-        name: "User",
-    },
-    {
+        id: "ALBUM_NAV",
         icon: "album",
         name: "Albums",
-    }
+        route: '/profile/albums'
+    },
+    {
+        id: "PLUS_NAV",
+        icon: "plus",
+        name: "Upload",
+        route: '/upload'
+    },
+    {
+        id: "SETTINGS_NAV",
+        icon: "settings",
+        name: "settings",
+        route: '/profile/settings'
+    },
 ]
 
 export const SideBar = () => {
@@ -29,9 +42,9 @@ export const SideBar = () => {
                     {
                         NAV_LINKS.map((link) => {
                             return (
-                                <li>
-                                    <Link to="/" className="side-bar--link">
-                                        <Icon name={link.icon} color="white" size="xl"/> <span>{link.name}</span>
+                                <li key={link.id}>
+                                    <Link to={link.route} className="side-bar--link" activeProps={{className: "nav__active"}}>
+                                        <Icon name={link.icon} color="white" size="large"/> <span>{link.name}</span>
                                     </Link>
                                 </li>
                             )
@@ -39,13 +52,13 @@ export const SideBar = () => {
                     }
                 </ul>
             </nav>
-            <div className="side-bar--head">
-                <div className="head--identity">
+            <div className="side-bar--footer">
+                <Link to='/profile' className="head--identity" activeProps={{className: "nav__active"}}>
                     <div className="head--user-avatar">
                         <img src={user.avatar} alt="user profile image"/>
                     </div>
                     <span>{user.name}</span>
-                </div>
+                </Link>
                 <Icon name={"logout"} color={"primary"} size={"large"}/>
             </div>
         </div>
