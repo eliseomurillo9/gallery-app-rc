@@ -5,7 +5,7 @@ import { Tabs } from "./components/tabs/Tabs";
 import "./profile.css";
 import { useTranslation } from "react-i18next";
 import { userStore } from "@/store/user";
-export function ProfileView() {
+export default function ProfileView() {
   const user = userStore.getUser();
   const { t } = useTranslation();
   return (

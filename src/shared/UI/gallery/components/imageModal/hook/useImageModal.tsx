@@ -1,39 +1,24 @@
 import {Popover} from "@shared/UI/Popover/Popover.tsx";
 import {t} from "i18next";
 import {Button} from "@shared/UI/Button/Button.tsx";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import type {Album} from "@/types/Album.ts";
 import type {Photo} from "@/types/Photo.ts";
 import {addPhotoToAlbum, getUserAlbums} from "@services/albumService.ts";
 import {userStore} from "@/store/user.ts";
-import {getPhotoById} from "@services/galleryService.ts";
 
 type useImageModalProps = {
     toggleModal: () => void;
-    photoId: Photo['id'];
+    photo: Photo;
     onDelete: (photoId: Photo['id']) => Promise<boolean>
 }
 export const useImageModal = (props: useImageModalProps) => {
-    const {toggleModal, photoId, onDelete} = props;
+    const {toggleModal, photo, onDelete} = props;
     const [modalType, setModalType] = useState<
         "addToAlbum" | "deletePhoto" | null
     >(null);
     const [openMenu, setOpenMenu] = useState(false);
     const [albumsList, setAlbumsList] = useState<Album[]>();
-    const [photo, setPhoto] = useState<Photo | null>(null);
-
-    useEffect(() => {
-        const fetchPhoto = async () => {
-            const {success, data, error} = await getPhotoById(photoId);
-            console.log(success);
-            if (!success) {
-                console.error('Photo not found for id:', error);
-            }
-            setPhoto(data);
-        };
-
-        fetchPhoto();
-    }, [photoId, setPhoto]);
 
     const addPhotoAlbum = async (
         albumId: Album["id"],
@@ -93,7 +78,7 @@ export const useImageModal = (props: useImageModalProps) => {
                                 placeholder="Accept"
                                 variant="primary"
                                 size="large"
-                                action={() => deletePhoto(photo?.id)}
+                                action={() => deletePhoto(photo.id)}
                             />
                             <Button
                                 placeholder="Cancel"
@@ -155,5 +140,5 @@ export const useImageModal = (props: useImageModalProps) => {
             toggleModal();
     }
 
-    return {renderPopover, TOOLBAR, photo, setPhoto, deletePhoto}
+    return {renderPopover, TOOLBAR, photo, deletePhoto}
 }

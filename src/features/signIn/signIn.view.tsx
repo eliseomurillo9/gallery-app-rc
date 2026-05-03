@@ -1,13 +1,13 @@
 import "./signin.css";
 import isotype from "../../assets/logo/isotype-primary.png";
-import { Button } from "../../shared/UI/Button/Button";
-import { Icon } from "../../shared/UI/Icon/Icon";
+import { Button } from "@shared/UI/Button/Button.tsx";
+import { Icon } from "@shared/UI/Icon/Icon.tsx";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import loader from "../../assets/img/security GIF.gif";
-import { authUser } from "../../services/authService";
-import { DEFAULT_LOGIN_VALUE } from "../../constants/login";
+import { authUser } from "@services/authService.ts";
+import { DEFAULT_LOGIN_VALUE } from "@/constants/login.ts";
 
 export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +30,7 @@ export function SignIn() {
     if (!authorizedUser) {
       throw new Error("Error signing in, retry sign in as guest");
     }
-    navigate({ to: "/$userId", params: { userId: String(authorizedUser.id) } });
+    await navigate({to: "/"});
   };
 
   return (

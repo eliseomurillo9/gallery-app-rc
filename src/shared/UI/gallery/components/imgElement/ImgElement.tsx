@@ -6,7 +6,6 @@ interface Props {
 }
 
 export function ImgElement({ ImgSrc, altText, action }: Readonly<Props>) {
-
   return (
     <button
       type="button"

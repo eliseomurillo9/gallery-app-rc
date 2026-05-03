@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import {ProfileView} from "@features/profile/profile.view.tsx";
+import {lazy} from "react";
 
+const ProfileView = lazy(() => import("@features/profile/profile.view.tsx"))
 export const Route = createFileRoute('/profile')({
     beforeLoad: ({location}) => {
       const pathRegex = /^\/profile$/gm

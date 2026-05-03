@@ -10,5 +10,6 @@ export function GalleryView() {
   if (!photos) return null; // or a loading UI
 
 const deletePhoto = (photoId: Photo['id']) => galleryStore.deletePhoto(user.id, photoId);
-  return photos && photos.length !== 0 && <Gallery photos={photos} onPhotoDelete={deletePhoto}/>;
+
+return photos && photos.length !== 0 && <Gallery photos={photos} onPhotoDelete={deletePhoto}/>;
 }

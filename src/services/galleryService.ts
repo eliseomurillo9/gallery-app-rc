@@ -21,13 +21,13 @@ export const getPhotos = async (userId: User["id"], signal?: AbortSignal): Promi
    const response = await fetch(`${BASE_URL}/user/${userId}/photo`, {signal});
 
    if (!response.ok) {
-     return { success: false, data: [], error: "Failed to fetch photos" };
+     return { success: false, data: null, error: "Failed to fetch photos" };
    }
 
    return {success: true, data: await response.json(), error: null};
  } catch (error) {
     console.error("Error retrieving photo", error);
-    return { success: false, data: [], error: "Unexpected error fetching photos" };
+    return { success: false, data: null, error: "Unexpected error fetching photos" };
  }
 };
 
@@ -104,10 +104,10 @@ export const deleteUserPhoto = async (userId: User["id"], photoId: Photo["id"]):
       console.log("User deleted successfully", userResponse);
       return {success: true, data: userResponse.photos, error: null};
     }
-    return {success: false, data: [], error: "Failed to delete photo"};
+    return {success: false, data: null, error: "Failed to delete photo"};
   } catch (error: unknown) {
     console.error("Error deleting photo:", error);
-    return {success: false, data: [], error: "Error deleting photo"};
+    return {success: false, data: null, error: "Error deleting photo"};
   }
 
 }
@@ -118,12 +118,12 @@ export const getGalleryByUserId = async (userId: User["id"]): Promise<Result<Pho
   try {
     const response = await fetch(`${BASE_URL}/user/${userId}/photo`);
     if (!response.ok) {
-      return {success: false, data: [], error: "Failed to fetch gallery"};
+      return {success: false, data: null, error: "Failed to fetch gallery"};
     }
 
     return {success: true, data: await response.json(), error: null};
   } catch (error) {
     console.error("Error deleting photo:", error);
-    return {success: false, data: [], error: "Unexpected error fetching photo"};
+    return {success: false, data: null, error: "Unexpected error fetching photo"};
   }
 }

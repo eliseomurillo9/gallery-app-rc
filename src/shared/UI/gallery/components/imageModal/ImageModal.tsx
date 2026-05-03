@@ -2,16 +2,18 @@ import type { Photo } from "@/types/Photo";
 import "./imageModal.css";
 import { Icon } from "@shared/UI/Icon/Icon";
 import {useImageModal} from "@shared/UI/Gallery/components/imageModal/hook/useImageModal.tsx";
+import {memo} from "react";
 
 type ImageModalProps = {
-  isOpen: boolean;
+  isOpen?: boolean;
   toggleModal: () => void;
-  photoId: Photo["id"];
+  photo: Photo;
   onDelete: (photoId: Photo['id']) => Promise<boolean>
 };
-export function ImageModal(props: ImageModalProps) {
-  const { isOpen, toggleModal, photoId, onDelete } = props;
-  const { renderPopover, TOOLBAR, photo } = useImageModal({toggleModal, photoId, onDelete});
+export const ImageModal = memo((props: ImageModalProps)=>  {
+  console.log("Render ImageModal");
+  const { isOpen,photo, toggleModal, onDelete } = props;
+  const { renderPopover, TOOLBAR } = useImageModal({toggleModal, photo, onDelete});
 
   return (
     isOpen && (
@@ -37,4 +39,5 @@ export function ImageModal(props: ImageModalProps) {
       </div>
     )
   );
-}
+})
+

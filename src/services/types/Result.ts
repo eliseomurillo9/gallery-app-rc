@@ -1,5 +1,5 @@
-export type Result <T> = {
-    success: boolean;
-    data: T | null;
-    error: string | null;
-}
+export type Result<T> = {
+    success: true;
+    data: T;
+    error: null;
+} | { success: false; data: null; error: string };
